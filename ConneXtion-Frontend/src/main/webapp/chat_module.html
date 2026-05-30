@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Support Chat - ConneXtion</title>
+
+        <link rel="stylesheet" href="css/chat_styles.css">
+    </head>
+    <body>
+
+        <main class="chat-wrapper">
+            <header>
+                <h1>Live Support Chat</h1>
+                <p id="connection-status" class="status-disconnected">Disconnected</p>
+            </header>
+
+            <div id="chat-container">
+                <ul id="message-list" class="message-list"></ul>
+            </div>
+
+            <div class="input-area">
+                <input type="text" id="message-input" placeholder="Type a message...">
+                <button id="send-button">Send</button>
+            </div>
+        </main>
+
+        <script src="js/websocket_client.js"></script>
+    </body>
+</html>

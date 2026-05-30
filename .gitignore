@@ -1,0 +1,9 @@
+# Carpetas privadas de configuración local
+nbproject/private/
+
+# Archivos compilados generados automáticamente
+target/
+*.class
+
+# Credenciales y secretos
+application-secret.properties
