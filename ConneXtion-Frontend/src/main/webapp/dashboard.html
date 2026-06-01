@@ -1,0 +1,52 @@
+<script src="js/auth.js"></script>
+<script>
+    async function init() {
+        const data = await checkSession();
+        if (!data)
+            return; // checkSession ya redirige si no hay sesión
+
+        const role = data.role;
+        const name = data.userName;
+
+        document.getElementById('userName').textContent = name;
+        document.getElementById('userInfo').textContent = data.email || '';
+
+        const labels = {CLIENT: 'Cliente', SUPPORTER: 'Soportista', SUPERVISOR: 'Supervisor'};
+        const badge = document.getElementById('roleBadge');
+        badge.textContent = labels[role] || role;
+        badge.className = `role-badge badge-${role}`;
+
+        const grid = document.getElementById('actionsGrid');
+
+        if (role === 'CLIENT') {
+            grid.innerHTML = `
+                <div class="action-card">
+                    <div class="icon">📋</div>
+                    <div class="label">Mis solicitudes</div>
+                </div>
+                <div class="action-card">
+                    <div class="icon">➕</div>
+                    <div class="label">Nueva solicitud</div>
+                </div>`;
+        }
+
+        if (role === 'SUPPORTER' || role === 'SUPERVISOR') {
+            grid.innerHTML = `
+                <div class="action-card">
+                    <div class="icon">📋</div>
+                    <div class="label">Ver solicitudes</div>
+                </div>`;
+        }
+
+        if (role === 'SUPERVISOR') {
+            grid.innerHTML += `
+                <div class="action-card"
+                     onclick="window.location.href='support-register.html'">
+                    <div class="icon">👤</div>
+                    <div class="label">Registrar soportista</div>
+                </div>`;
+        }
+    }
+
+    init();
+</script>
