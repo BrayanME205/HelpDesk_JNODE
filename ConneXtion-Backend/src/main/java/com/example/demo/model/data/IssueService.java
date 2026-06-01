@@ -1,0 +1,109 @@
+package com.example.demo.model.data;
+
+import com.example.demo.model.data.AddCommentRequest;
+import com.example.demo.model.data.CreateIssueRequest;
+import com.example.demo.model.entities.Client;
+import com.example.demo.model.entities.Issue;
+import com.example.demo.model.entities.IssueClassification;
+import com.example.demo.model.entities.IssueComment;
+import com.example.demo.model.entities.IssueStatus;
+import com.example.demo.model.entities.ServiceEntity;
+import com.example.demo.repository.ClientRepository;
+import com.example.demo.repository.IssueCommentRepository;
+import com.example.demo.repository.IssueRepository;
+import com.example.demo.repository.ServiceRepository;
+import jakarta.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+import org.springframework.stereotype.Service;
+
+@Service
+public class IssueService {
+
+    private final IssueRepository issueRepository;
+    private final IssueCommentRepository issueCommentRepository;
+    private final ClientRepository clientRepository;
+    private final ServiceRepository serviceRepository;
+
+    public IssueService(
+            IssueRepository issueRepository,
+            IssueCommentRepository issueCommentRepository,
+            ClientRepository clientRepository,
+            ServiceRepository serviceRepository) {
+        this.issueRepository = issueRepository;
+        this.issueCommentRepository = issueCommentRepository;
+        this.clientRepository = clientRepository;
+        this.serviceRepository = serviceRepository;
+    }
+
+    @Transactional
+    public Issue createIssue(CreateIssueRequest request) {
+        Client client = clientRepository.findById(request.getClientId())
+                .orElseThrow(() -> new IllegalArgumentException("Client not found"));
+
+        ServiceEntity service = serviceRepository.findById(request.getServiceId())
+                .orElseThrow(() -> new IllegalArgumentException("Service not found"));
+
+        boolean clientOwnsService = client.getServices()
+                .stream()
+                .anyMatch(s -> s.getId().equals(service.getId()));
+
+        if (!clientOwnsService) {
+            throw new IllegalArgumentException("The selected service does not belong to the client");
+        }
+
+        Issue issue = new Issue();
+        issue.setRequestNumber(generateRequestNumber());
+        issue.setClient(client);
+        issue.setService(service);
+        issue.setDescription(request.getDescription());
+        issue.setContactPhone(request.getContactPhone());
+        issue.setContactEmail(request.getContactEmail());
+        issue.setReferenceAddress(request.getReferenceAddress());
+        issue.setStatus(IssueStatus.INGRESADO);
+        issue.setClassification(IssueClassification.MEDIA);
+        issue.setRegisteredAt(LocalDateTime.now());
+        issue.setUpdatedAt(LocalDateTime.now());
+
+        return issueRepository.save(issue);
+    }
+
+    public List<Issue> findIssuesByClient(Integer clientId) {
+        return issueRepository.findByClientIdOrderByRegisteredAtDesc(clientId);
+    }
+
+    public Issue findIssueById(Integer issueId) {
+        return issueRepository.findById(issueId)
+                .orElseThrow(() -> new IllegalArgumentException("Issue not found"));
+    }
+
+    public List<IssueComment> findCommentsByIssue(Integer issueId) {
+        return issueCommentRepository.findByIssueIdOrderByCommentTimestampAsc(issueId);
+    }
+
+    @Transactional
+    public IssueComment addClientComment(Integer issueId, AddCommentRequest request) {
+        Issue issue = issueRepository.findById(issueId)
+                .orElseThrow(() -> new IllegalArgumentException("Issue not found"));
+
+        Client client = clientRepository.findById(request.getClientId())
+                .orElseThrow(() -> new IllegalArgumentException("Client not found"));
+
+        if (!issue.getClient().getId().equals(client.getId())) {
+            throw new IllegalArgumentException("The client cannot comment on another client's issue");
+        }
+
+        IssueComment comment = new IssueComment();
+        comment.setIssue(issue);
+        comment.setClientAuthor(client);
+        comment.setDescription(request.getDescription());
+        comment.setCommentTimestamp(LocalDateTime.now());
+
+        return issueCommentRepository.save(comment);
+    }
+
+    private String generateRequestNumber() {
+        return "REQ-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+    }
+}
