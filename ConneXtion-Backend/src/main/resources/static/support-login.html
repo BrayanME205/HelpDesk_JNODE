@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ConneXtion – Acceso Soporte</title>
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="logo">
+                <h1>ConneXtion</h1>
+                <p>Portal de Soporte</p>
+            </div>
+            <h2>Acceso Soporte</h2>
+
+            <div id="alertMsg" class="alert"></div>
+
+            <div class="form-group">
+                <label>Correo electrónico *</label>
+                <input type="email" id="email" placeholder="correo@connextion.com">
+            </div>
+            <div class="form-group">
+                <label>Contraseña *</label>
+                <input type="password" id="password" placeholder="••••••••">
+            </div>
+
+            <button class="btn" onclick="loginUser()">Ingresar</button>
+            <div class="link-row">
+                <a href="index.html">← Acceso clientes</a>
+            </div>
+        </div>
+        <script src="js/auth.js"></script>
+    </body>
+</html>
