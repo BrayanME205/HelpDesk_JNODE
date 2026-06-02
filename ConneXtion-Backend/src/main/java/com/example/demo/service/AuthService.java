@@ -41,4 +41,8 @@ public class AuthService {
 
         return null;
     }
+    
+    public Client findClientById(Integer clientId) {
+    return clientRepository.findById(clientId).orElse(null);
+}
 }

@@ -15,7 +15,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(originPatterns = "*", allowCredentials = "true")
 public class RegisterController {
 
     private final ClientRepository clientRepository;

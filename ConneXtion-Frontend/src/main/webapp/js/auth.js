@@ -14,7 +14,7 @@ async function loginUser() {
         const res = await fetch(`${API}/auth/login`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            credentials: 'include', // ← envía/recibe la cookie de sesión
+            credentials: 'include',
             body: JSON.stringify({email, password})
         });
 
@@ -24,11 +24,21 @@ async function loginUser() {
         }
 
         const data = await res.json();
+        console.log("LOGIN DATA:", data);
 
-        // Guardamos solo lo necesario para la UI — la sesión real está en el servidor
         sessionStorage.setItem('userName', data.name);
         sessionStorage.setItem('role', data.role);
         sessionStorage.setItem('userId', data.id);
+        sessionStorage.setItem('email', data.email || email);
+
+        if (data.role === 'CLIENT') {
+            sessionStorage.setItem('clientId', data.clientId || data.id);
+
+            if (data.services) {
+                sessionStorage.setItem('clientServices', JSON.stringify(data.services));
+            }
+        }
+        
 
         window.location.href = 'dashboard.html';
 
@@ -158,10 +168,24 @@ async function checkSession() {
         }
 
         const data = await res.json();
-        // Sincronizar sessionStorage con la sesión del servidor
-        sessionStorage.setItem('userName', data.userName);
-        sessionStorage.setItem('role', data.role);
-        sessionStorage.setItem('userId', data.userId);
+        console.log("SESSION DATA:", data);
+
+        sessionStorage.setItem('userName', data.userName || data.name || '');
+        sessionStorage.setItem('role', data.role || '');
+        sessionStorage.setItem('userId', data.userId || data.id || '');
+        sessionStorage.setItem('email', data.email || sessionStorage.getItem('email') || '');
+
+        if ((data.role || sessionStorage.getItem('role')) === 'CLIENT') {
+            sessionStorage.setItem(
+                'clientId',
+                data.clientId || data.userId || data.id || sessionStorage.getItem('clientId') || ''
+            );
+
+            if (data.services) {
+                sessionStorage.setItem('clientServices', JSON.stringify(data.services));
+            }
+        }
+
         return data;
 
     } catch (e) {
@@ -170,26 +194,47 @@ async function checkSession() {
     }
 }
 
+
+
+
 // ── Cargar servicios ──────────────────────────────────────────────────────
 async function loadServices() {
+    const grid = document.getElementById('servicesGrid');
+    if (!grid)
+        return;
+
     try {
         const res = await fetch(`${API}/auth/services`, {
             credentials: 'include'
         });
-        const services = await res.json();
-        const grid = document.getElementById('servicesGrid');
+
+        const data = await res.json();
+        console.log("SERVICES DATA:", data);
+
+        if (!res.ok || !Array.isArray(data)) {
+            grid.innerHTML = '<p style="color:red">No se pudieron cargar los servicios.</p>';
+            return;
+        }
+
         grid.innerHTML = '';
-        services.forEach(s => {
+
+        data.forEach(s => {
             grid.innerHTML += `
                 <label class="service-option">
-                    <input type="checkbox" value="${s.serviceId}"> ${s.name}
+                    <input type="checkbox" value="${s.serviceId || s.id}"> ${s.name}
                 </label>`;
         });
+
+        if (data.length === 0) {
+            grid.innerHTML = '<p style="color:red">No hay servicios disponibles.</p>';
+        }
+
     } catch (e) {
-        document.getElementById('servicesGrid').innerHTML =
-                '<p style="color:red">Error cargando servicios.</p>';
+        console.error("Error en loadServices:", e);
+        grid.innerHTML = '<p style="color:red">Error cargando servicios.</p>';
     }
 }
+
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 function getCheckedServices() {
