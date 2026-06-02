@@ -7,3 +7,5 @@ target/
 
 # Credenciales y secretos
 application-secret.properties
+
+src/main/resources/application.properties

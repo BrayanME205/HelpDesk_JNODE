@@ -15,19 +15,19 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*")
+@CrossOrigin(originPatterns = "*", allowCredentials = "true")
 public class RegisterController {
 
-    private final ClientRepository    clientRepository;
+    private final ClientRepository clientRepository;
     private final SupporterRepository supporterRepository;
-    private final ServiceRepository   serviceRepository;
+    private final ServiceRepository serviceRepository;
 
     public RegisterController(ClientRepository clientRepository,
-                               SupporterRepository supporterRepository,
-                               ServiceRepository serviceRepository) {
-        this.clientRepository    = clientRepository;
+            SupporterRepository supporterRepository,
+            ServiceRepository serviceRepository) {
+        this.clientRepository = clientRepository;
         this.supporterRepository = supporterRepository;
-        this.serviceRepository   = serviceRepository;
+        this.serviceRepository = serviceRepository;
     }
 
     // CU1 — Registrar cliente

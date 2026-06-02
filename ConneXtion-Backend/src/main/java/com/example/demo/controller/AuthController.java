@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*", allowCredentials = "true")
+@CrossOrigin(originPatterns = "*", allowCredentials = "true")
 public class AuthController {
 
     private final AuthService authService;
@@ -25,9 +25,9 @@ public class AuthController {
     // CU2 / CU8 — Login unificado con sesión HTTP
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> body,
-                                   HttpServletRequest request) {
+            HttpServletRequest request) {
 
-        String email    = body.get("email");
+        String email = body.get("email");
         String password = body.get("password");
 
         if (email == null || password == null || email.isBlank() || password.isBlank()) {
@@ -46,31 +46,31 @@ public class AuthController {
         HttpSession session = request.getSession(true);
 
         if (user instanceof Client c) {
-            session.setAttribute("userId",   c.getClientId());
+            session.setAttribute("userId", c.getClientId());
             session.setAttribute("userName", c.getName());
-            session.setAttribute("email",    c.getEmail());
-            session.setAttribute("role",     "CLIENT");
+            session.setAttribute("email", c.getEmail());
+            session.setAttribute("role", "CLIENT");
 
             return ResponseEntity.ok(Map.of(
-                "id",    c.getClientId(),
-                "name",  c.getName(),
-                "role",  "CLIENT",
-                "email", c.getEmail()
+                    "id", c.getClientId(),
+                    "name", c.getName(),
+                    "role", "CLIENT",
+                    "email", c.getEmail()
             ));
         }
 
         if (user instanceof Supporter s) {
             String role = s.getIsSupervisor() ? "SUPERVISOR" : "SUPPORTER";
-            session.setAttribute("userId",   s.getSupporterId());
+            session.setAttribute("userId", s.getSupporterId());
             session.setAttribute("userName", s.getName());
-            session.setAttribute("email",    s.getEmail());
-            session.setAttribute("role",     role);
+            session.setAttribute("email", s.getEmail());
+            session.setAttribute("role", role);
 
             return ResponseEntity.ok(Map.of(
-                "id",    s.getSupporterId(),
-                "name",  s.getName(),
-                "role",  role,
-                "email", s.getEmail()
+                    "id", s.getSupporterId(),
+                    "name", s.getName(),
+                    "role", role,
+                    "email", s.getEmail()
             ));
         }
 
@@ -96,10 +96,10 @@ public class AuthController {
                     .body(Map.of("message", "No hay sesión activa."));
         }
         return ResponseEntity.ok(Map.of(
-            "userId",   session.getAttribute("userId"),
-            "userName", session.getAttribute("userName"),
-            "email",    session.getAttribute("email"),
-            "role",     session.getAttribute("role")
+                "userId", session.getAttribute("userId"),
+                "userName", session.getAttribute("userName"),
+                "email", session.getAttribute("email"),
+                "role", session.getAttribute("role")
         ));
     }
 }
