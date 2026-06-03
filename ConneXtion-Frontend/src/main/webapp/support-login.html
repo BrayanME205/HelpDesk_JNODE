@@ -3,22 +3,22 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ConneXtion – Iniciar Sesión</title>
+        <title>ConneXtion – Acceso Soporte</title>
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
         <div class="container">
             <div class="logo">
                 <h1>ConneXtion</h1>
-                <p>Servicios de telecomunicaciones</p>
+                <p>Portal de Soporte</p>
             </div>
-            <h2>Iniciar Sesión</h2>
+            <h2>Acceso Soporte</h2>
 
             <div id="alertMsg" class="alert"></div>
 
             <div class="form-group">
                 <label>Correo electrónico *</label>
-                <input type="email" id="email" placeholder="correo@ejemplo.com">
+                <input type="email" id="email" placeholder="correo@connextion.com">
             </div>
             <div class="form-group">
                 <label>Contraseña *</label>
@@ -26,19 +26,10 @@
             </div>
 
             <button class="btn" onclick="loginUser()">Ingresar</button>
-
             <div class="link-row">
-                ¿No tienes cuenta? <a href="register.html">Regístrate aquí</a>
-            </div>
-            <div class="link-row" style="margin-top:.5rem">
-                ¿Eres de soporte? <a href="support-login.html">Acceso soporte</a>
+                <a href="index.html">← Acceso clientes</a>
             </div>
         </div>
         <script src="js/auth.js"></script>
-        <script>
-               if (sessionStorage.getItem('userId')) {
-                    window.location.href = 'dashboard.html';
-                }
-        </script>
     </body>
 </html>
