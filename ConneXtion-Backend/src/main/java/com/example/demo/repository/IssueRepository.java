@@ -1,0 +1,10 @@
+package com.example.demo.repository;
+
+import com.example.demo.model.entities.Issue;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface IssueRepository extends JpaRepository<Issue, Integer> {
+
+    List<Issue> findByClientClientIdOrderByRegisteredAtDesc(Integer clientId);
+}
