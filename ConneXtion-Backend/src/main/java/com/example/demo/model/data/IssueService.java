@@ -79,8 +79,8 @@ public class IssueService {
     }
 
     public List<IssueComment> findCommentsByIssue(Integer issueId) {
-        return issueCommentRepository.findByIssueIdOrderByCommentTimestampAsc(issueId);
-    }
+    return issueCommentRepository.findByIssue_IdOrderByCommentTimestampAsc(issueId);
+}
 
     @Transactional
     public IssueComment addClientComment(Integer issueId, AddCommentRequest request) {

@@ -1,8 +1,8 @@
 package com.example.demo.model.entities;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-        
+import java.time.LocalDateTime;        
+
 @Entity
 @Table(name = "Issue_Comment")
 public class IssueComment {
@@ -77,7 +77,4 @@ public class IssueComment {
     public void setCommentTimestamp(LocalDateTime commentTimestamp) {
         this.commentTimestamp = commentTimestamp;
     }
-
-    
-     
 }

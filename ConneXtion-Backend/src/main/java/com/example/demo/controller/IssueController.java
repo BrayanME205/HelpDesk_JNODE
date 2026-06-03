@@ -12,6 +12,9 @@ import com.example.demo.service.SoftwareResolver;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import com.example.demo.model.entities.Client;
+import com.example.demo.model.entities.Supporter;
+
 
 import java.util.HashMap;
 import java.util.List;
