@@ -24,7 +24,6 @@ async function loadClientServices() {
     const select = document.getElementById("serviceId");
     const servicesJson = sessionStorage.getItem("clientServices");
 
-    // 1) Si ya hay servicios guardados en sesión, usarlos
     if (servicesJson) {
         try {
             const services = JSON.parse(servicesJson);
@@ -44,7 +43,6 @@ async function loadClientServices() {
         }
     }
 
-    // 2) Fallback: cargar servicios generales desde el backend
     try {
         const res = await fetch(`${API}/auth/services`, {
             credentials: 'include'
@@ -57,7 +55,6 @@ async function loadClientServices() {
             return;
         }
 
-        // 🔥 IMPORTANTE: guardarlos también en sesión
         sessionStorage.setItem("clientServices", JSON.stringify(services));
 
         select.innerHTML = `<option value="">Seleccione un servicio</option>`;
