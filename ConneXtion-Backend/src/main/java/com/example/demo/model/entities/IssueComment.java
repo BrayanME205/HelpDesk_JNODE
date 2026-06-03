@@ -2,8 +2,6 @@ package com.example.demo.model.entities;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import com.example.demo.model.entity.Client;
-import com.example.demo.model.entity.Supporter;
         
 @Entity
 @Table(name = "Issue_Comment")

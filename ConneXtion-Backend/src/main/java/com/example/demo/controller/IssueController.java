@@ -1,33 +1,38 @@
 package com.example.demo.controller;
 
-
 import com.example.demo.model.data.AddCommentRequest;
 import com.example.demo.model.data.CreateIssueRequest;
 import com.example.demo.model.data.IssueService;
 import com.example.demo.model.entities.Issue;
 import com.example.demo.model.entities.IssueComment;
+import com.example.demo.model.entities.IssueStatus;
+import com.example.demo.service.AssignmentService;
+import com.example.demo.repository.IssueRepository; 
+import com.example.demo.service.SoftwareResolver;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-import com.example.demo.model.entity.Client;
-import com.example.demo.model.entity.Supporter;
 
-
-
-@CrossOrigin(origins = "http://localhost:8080", allowCredentials = "true")
 @RestController
-@RequestMapping("/api/client/issues")
-
-
+@RequestMapping("/api/issues")
 public class IssueController {
 
     private final IssueService issueService;
+    private final AssignmentService assignmentService;
+    private final IssueRepository issueRepository;
+    private final SoftwareResolver softwareResolver;
 
-    public IssueController(IssueService issueService) {
+    public IssueController(IssueService issueService, 
+                           AssignmentService assignmentService, 
+                           IssueRepository issueRepository,SoftwareResolver softwareResolver) {
         this.issueService = issueService;
+        this.assignmentService = assignmentService;
+        this.issueRepository = issueRepository;
+        this.softwareResolver = softwareResolver;
     }
 
     @PostMapping
@@ -98,5 +103,24 @@ public class IssueController {
         response.put("commentTimestamp", comment.getCommentTimestamp());
         response.put("message", "Comment added successfully");
         return response;
+    }
+
+    //soporte/asignación
+
+    @GetMapping("/pending")
+    public List<Issue> getPendingIssues() {
+       return assignmentService.getPendingIssues();
+    }
+
+    @PostMapping("/{issueId}/assign/{supporterId}")
+    public String assignIssue(@PathVariable Integer issueId, @PathVariable Integer supporterId) {
+        assignmentService.assignIssue(issueId, supporterId); // CU-13: Asignación
+        return "Tiquete " + issueId + " asignado correctamente al soportista " + supporterId;
+    }
+    
+    @PostMapping("/{issueId}/resolve")
+    public String resolveIssue(@PathVariable Integer issueId, @RequestBody String comment) {
+        assignmentService.resolveIssue(issueId, comment, softwareResolver); // CU-15: Resolución
+        return "Tiquete resuelto con éxito";
     }
 }

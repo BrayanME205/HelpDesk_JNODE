@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.entity.Client;
-import com.example.demo.model.entity.Supporter;
-import com.example.demo.model.entity.Service;
+import com.example.demo.model.entities.Client;
+import com.example.demo.model.entities.Supporter;
+import com.example.demo.model.entities.Service;
 import com.example.demo.model.data.ClientRepository;
 import com.example.demo.model.data.SupporterRepository;
 import com.example.demo.model.data.ServiceRepository;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/register")
 public class RegisterController {
 
     private final ClientRepository clientRepository;

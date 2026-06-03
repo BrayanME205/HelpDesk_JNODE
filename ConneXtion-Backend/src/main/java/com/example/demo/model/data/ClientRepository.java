@@ -1,6 +1,6 @@
 package com.example.demo.model.data;
 
-import com.example.demo.model.entity.Client;
+import com.example.demo.model.entities.Client;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -2,8 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.model.data.ClientRepository;
 import com.example.demo.model.data.SupporterRepository;
-import com.example.demo.model.entity.Client;
-import com.example.demo.model.entity.Supporter;
+import com.example.demo.model.entities.Client;
+import com.example.demo.model.entities.Supporter;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
