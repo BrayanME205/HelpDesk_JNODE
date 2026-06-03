@@ -2,7 +2,8 @@ document.addEventListener("DOMContentLoaded", loadMyRequests);
 
 async function loadMyRequests() {
     const session = await checkSession();
-    if (!session) return;
+    if (!session)
+        return;
 
     const role = sessionStorage.getItem("role");
     const clientId = sessionStorage.getItem("clientId");
@@ -13,7 +14,7 @@ async function loadMyRequests() {
     }
 
     try {
-        const res = await fetch(`${API}/client/issues/client/${clientId}`, {
+        const res = await fetch(`http://localhost:8081/api/issues/client/${clientId}`, {
             credentials: "include"
         });
 
@@ -80,7 +81,8 @@ function goToDetail(issueId) {
 }
 
 function formatDateTime(dateString) {
-    if (!dateString) return "";
+    if (!dateString)
+        return "";
     return new Date(dateString).toLocaleString("es-CR");
 }
 
@@ -101,5 +103,5 @@ async function parseResponse(res) {
         return await res.json();
     }
 
-    return { message: await res.text() };
+    return {message: await res.text()};
 }

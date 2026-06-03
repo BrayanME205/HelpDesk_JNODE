@@ -157,14 +157,24 @@ async function logout() {
 
 // ── Verificar sesión al cargar páginas protegidas ─────────────────────────
 async function checkSession() {
+    const role = sessionStorage.getItem('role');
+    const userId = sessionStorage.getItem('userId');
+
+    if (!role || !userId) {
+        window.location.href = 'index.html';
+        return null;
+    }
+
     try {
         const res = await fetch(`${API}/auth/session`, {
             credentials: 'include'
         });
 
         if (!res.ok) {
-            window.location.href = 'index.html';
-            return null;
+            const userName = sessionStorage.getItem('userName');
+            const email = sessionStorage.getItem('email');
+            const clientId = sessionStorage.getItem('clientId');
+            return { role, userId, userName, email, clientId };
         }
 
         const data = await res.json();
@@ -173,14 +183,10 @@ async function checkSession() {
         sessionStorage.setItem('userName', data.userName || data.name || '');
         sessionStorage.setItem('role', data.role || '');
         sessionStorage.setItem('userId', data.userId || data.id || '');
-        sessionStorage.setItem('email', data.email || sessionStorage.getItem('email') || '');
+        sessionStorage.setItem('email', data.email || '');
 
-        if ((data.role || sessionStorage.getItem('role')) === 'CLIENT') {
-            sessionStorage.setItem(
-                'clientId',
-                data.clientId || data.userId || data.id || sessionStorage.getItem('clientId') || ''
-            );
-
+        if (data.role === 'CLIENT') {
+            sessionStorage.setItem('clientId', data.clientId || data.userId || '');
             if (data.services) {
                 sessionStorage.setItem('clientServices', JSON.stringify(data.services));
             }
@@ -189,22 +195,23 @@ async function checkSession() {
         return data;
 
     } catch (e) {
-        window.location.href = 'index.html';
-        return null;
+        const userName = sessionStorage.getItem('userName');
+        const email = sessionStorage.getItem('email');
+        const clientId = sessionStorage.getItem('clientId');
+        return { role, userId, userName, email, clientId };
     }
 }
 
 
 
-
-// ── Cargar servicios ──────────────────────────────────────────────────────
+// Cargar servicios 
 async function loadServices() {
     const grid = document.getElementById('servicesGrid');
     if (!grid)
         return;
 
     try {
-        const res = await fetch(`${API}/auth/services`, {
+       const res = await fetch(`${API}/register/services`, {
             credentials: 'include'
         });
 

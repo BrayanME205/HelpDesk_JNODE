@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/register")
 public class RegisterController {
 
     private final ClientRepository clientRepository;

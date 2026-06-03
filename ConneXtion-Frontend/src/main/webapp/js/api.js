@@ -3,9 +3,8 @@ const API_BASE_URL = "http://localhost:8081/api";
 async function apiRequest(endpoint, method = "GET", body = null) {
     const config = {
         method,
-        headers: {
-            "Content-Type": "application/json"
-        }
+        headers: {"Content-Type": "application/json"},
+        credentials: "include"  
     };
 
     if (body) {
@@ -32,7 +31,8 @@ async function apiRequest(endpoint, method = "GET", body = null) {
 }
 
 function formatDateTime(dateString) {
-    if (!dateString) return "";
+    if (!dateString)
+        return "";
     return new Date(dateString).toLocaleString("es-CR");
 }
 

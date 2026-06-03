@@ -1,11 +1,13 @@
 package com.example.demo.model.entities;
 
 import com.example.demo.model.entities.Service;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "Supporter")
 public class Supporter {

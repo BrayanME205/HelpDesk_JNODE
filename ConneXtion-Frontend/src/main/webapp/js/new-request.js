@@ -2,7 +2,8 @@ document.addEventListener("DOMContentLoaded", initNewRequestPage);
 
 async function initNewRequestPage() {
     const session = await checkSession();
-    if (!session) return;
+    if (!session)
+        return;
 
     const role = sessionStorage.getItem("role");
     const clientId = sessionStorage.getItem("clientId");
@@ -97,9 +98,9 @@ async function createIssue() {
     }
 
     try {
-        const res = await fetch(`${API}/client/issues`, {
+        const res = await fetch(`http://localhost:8081/api/issues`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {"Content-Type": "application/json"},
             credentials: "include",
             body: JSON.stringify(payload)
         });
@@ -130,5 +131,5 @@ async function parseResponse(res) {
         return await res.json();
     }
 
-    return { message: await res.text() };
+    return {message: await res.text()};
 }

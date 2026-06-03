@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 
-
 @Entity
 @Table(name = "Issue")
 public class Issue {
@@ -57,6 +56,11 @@ public class Issue {
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    public Issue() {
+        this.registeredAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
 
     public Integer getId() {
         return id;
@@ -169,7 +173,4 @@ public class Issue {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-
-   
-    
 }
