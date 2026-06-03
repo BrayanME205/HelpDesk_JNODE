@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.entity.Client;
-import com.example.demo.model.entity.Service;
-import com.example.demo.model.entity.Supporter;
+import com.example.demo.model.entities.Client;
+import com.example.demo.model.entities.Service;
+import com.example.demo.model.entities.Supporter;
 import com.example.demo.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

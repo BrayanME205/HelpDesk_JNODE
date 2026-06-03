@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
-import com.example.demo.model.entity.Client;
+import com.example.demo.model.entities.Client;
 
 @Service
 public class IssueService {
@@ -41,7 +41,7 @@ public class IssueService {
         Client client = clientRepository.findById(request.getClientId())
                 .orElseThrow(() -> new IllegalArgumentException("Client not found"));
 
-        com.example.demo.model.entity.Service service = serviceRepository.findById(request.getServiceId())
+        com.example.demo.model.entities.Service service = serviceRepository.findById(request.getServiceId())
                 .orElseThrow(() -> new IllegalArgumentException("Service not found"));
 
         boolean clientOwnsService = client.getServices()
@@ -79,8 +79,8 @@ public class IssueService {
     }
 
     public List<IssueComment> findCommentsByIssue(Integer issueId) {
-        return issueCommentRepository.findByIssueIdOrderByCommentTimestampAsc(issueId);
-    }
+    return issueCommentRepository.findByIssue_IdOrderByCommentTimestampAsc(issueId);
+}
 
     @Transactional
     public IssueComment addClientComment(Integer issueId, AddCommentRequest request) {

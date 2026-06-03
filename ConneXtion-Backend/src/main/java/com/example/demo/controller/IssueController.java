@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import com.example.demo.model.entity.Client;
-import com.example.demo.model.entity.Supporter;
+import com.example.demo.model.entities.Client;
+import com.example.demo.model.entities.Supporter;
 
 
 
