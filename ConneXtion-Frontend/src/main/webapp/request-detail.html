@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConneXtion – Detalle de solicitud</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <div class="container wide">
+        <div class="logo">
+            <h1>ConneXtion</h1>
+            <p>Detalle de solicitud</p>
+        </div>
+
+        <div id="alertMsg" class="alert" style="display:none;"></div>
+
+        <!-- DETALLE -->
+        <div class="card">
+            <h2>Detalle de la solicitud</h2>
+            <div id="issueDetail"></div>
+        </div>
+
+        <!-- COMENTARIOS -->
+        <div class="card">
+            <h2>Comentarios</h2>
+            <ul id="commentsList" class="comments-list"></ul>
+        </div>
+
+        <!-- NUEVO COMENTARIO -->
+        <div class="card">
+            <h2>Agregar comentario</h2>
+
+            <form id="commentForm">
+                <div class="form-group">
+                    <label for="commentDescription">Comentario *</label>
+                    <textarea id="commentDescription" required></textarea>
+                </div>
+
+                <div class="actions">
+                    <button type="submit">Agregar comentario</button>
+                    <a class="btn btn-secondary" href="my-requests.html">Volver</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="link-row">
+            <a href="dashboard.html">Inicio</a>
+        </div>
+
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/request-detail.js"></script>
+
+</body>
+</html>

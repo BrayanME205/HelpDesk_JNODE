@@ -1,5 +1,5 @@
 // CONFIGURATION
-const WS_URL = "ws://localhost:8080/chat";
+const WS_URL = "ws://localhost:8081/chat";
 let webSocket;
 
 // DOM ELEMENTS
