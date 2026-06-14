@@ -9,4 +9,5 @@ public interface IssueRepository extends JpaRepository<Issue, Integer> {
 
     List<Issue> findByClientClientIdOrderByRegisteredAtDesc(Integer clientId);
    List<Issue> findByStatus(IssueStatus status);
+   List<Issue> findByAssignedSupporter_SupporterId(Integer supporterId);
 }
