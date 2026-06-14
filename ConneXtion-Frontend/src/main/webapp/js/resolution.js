@@ -1,15 +1,16 @@
-// js/resolucion.js
+const API = 'http://localhost:8081/api';
+
 async function resolveIssue(event) {
-    event.preventDefault(); // Evita que la página se recargue
+    event.preventDefault();
 
     const issueId = document.getElementById('issueId').value;
     const comment = document.getElementById('resolutionComment').value;
 
     try {
-        const response = await fetch(`${API}/issues/${issueid}$/resolve`, {
+        const response = await fetch(`${API}/issues/${issueId}/resolve`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'text/plain' // Enviamos el comentario como texto plano
+                'Content-Type': 'text/plain'
             },
             body: comment
         });
@@ -17,7 +18,7 @@ async function resolveIssue(event) {
         if (response.ok) {
             const message = await response.text();
             alert("¡Éxito! " + message);
-            document.getElementById('resolveForm').reset(); // Limpia el formulario
+            document.getElementById('resolveForm').reset();
         } else {
             alert('Error: Verifica que el tiquete exista y esté "En Progreso".');
         }
@@ -27,8 +28,11 @@ async function resolveIssue(event) {
     }
 }
 
-// Asignar el evento al formulario cuando cargue la página
 window.onload = () => {
+    const params = new URLSearchParams(window.location.search);
+    const issueId = params.get('issueId');
+    if (issueId) {
+        document.getElementById('issueId').value = issueId;
+    }
     document.getElementById('resolveForm').addEventListener('submit', resolveIssue);
 };
-

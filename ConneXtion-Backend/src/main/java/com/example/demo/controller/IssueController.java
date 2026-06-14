@@ -126,23 +126,23 @@ public class IssueController {
     }
 
     @GetMapping("/supporter/{supporterId}")
-    public List<Map<String, Object>> listSupporterIssues(@PathVariable Integer supporterId) {
-        return issueRepository.findByAssignedSupporter_SupporterId(supporterId).stream().map(issue -> {
-            Map<String, Object> item = new HashMap<>();
-            item.put("issueId", issue.getId());
-            item.put("requestNumber", issue.getRequestNumber());
-            item.put("service", issue.getService().getName());
-            item.put("registeredAt", issue.getRegisteredAt());
-            item.put("status", issue.getStatus());
-            item.put("classification", issue.getClassification());
-            return item;
-        }).toList();
-    }
-    
+public List<Map<String, Object>> listSupporterIssues(@PathVariable Integer supporterId) {
+    return issueRepository.findByAssignedSupporter_SupporterId(supporterId).stream().map(issue -> {
+        Map<String, Object> item = new HashMap<>();
+        item.put("issueId", issue.getId());
+        item.put("requestNumber", issue.getRequestNumber());
+        item.put("service", issue.getService().getName());
+        item.put("description", issue.getDescription()); // <- agregar esta línea
+        item.put("registeredAt", issue.getRegisteredAt());
+        item.put("status", issue.getStatus());
+        item.put("classification", issue.getClassification());
+        return item;
+    }).toList();
+}
     @PutMapping("/{issueId}/status")
     public String updateStatus(@PathVariable Integer issueId, @RequestBody Map<String, String> request) {
         String newStatus = request.get("status");
-        issueService.updateIssueStatus(issueId, newStatus); 
+        issueService.updateIssueStatus(issueId, newStatus);
         return "Estado actualizado a " + newStatus;
     }
 
@@ -154,7 +154,7 @@ public class IssueController {
         issueService.addTechnicalNote(issueId, supporterId, content);
         return "Nota técnica agregada correctamente";
     }
-    
+
     @PostMapping("/{issueId}/comments/support")
     @ResponseStatus(HttpStatus.CREATED)
     public String addSupportComment(@PathVariable Integer issueId, @RequestBody Map<String, String> request) {
@@ -163,4 +163,24 @@ public class IssueController {
         issueService.addSupportComment(issueId, supporterId, content);
         return "Comentario enviado al cliente correctamente";
     }
+
+    @PostMapping("/{issueId}/start")
+    public String startIssue(@PathVariable Integer issueId) {
+        assignmentService.startIssue(issueId);
+        return "Solicitud " + issueId + " en proceso de atención";
+    }
+
+    @GetMapping("/active")
+    public List<Map<String, Object>> getActiveIssues() {
+        return issueService.findActiveIssues().stream().map(issue -> {
+            Map<String, Object> item = new HashMap<>();
+            item.put("issueId", issue.getId());
+            item.put("requestNumber", issue.getRequestNumber());
+            item.put("description", issue.getDescription());
+            item.put("status", issue.getStatus());
+            item.put("classification", issue.getClassification());
+            return item;
+        }).toList();
+    }
+
 }

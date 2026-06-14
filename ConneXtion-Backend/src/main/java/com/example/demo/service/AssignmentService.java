@@ -93,12 +93,28 @@ public class AssignmentService {
             }
         });
         monitorThread.setName("ConneXtion-Monitor-Thread");
-        monitorThread.setDaemon(true); 
+        monitorThread.setDaemon(true);
         monitorThread.start();
     }
 
     public List<Issue> getPendingIssues() {
         return issueRepository.findByStatus(IssueStatus.INGRESADO);
+    }
+
+    @Transactional
+    public void startIssue(Integer issueId) {
+        Issue issue = issueRepository.findById(issueId)
+                .orElseThrow(() -> new RuntimeException("Ticket no encontrado"));
+
+        if (issue.getStatus() != IssueStatus.INGRESADO
+                && issue.getStatus() != IssueStatus.ASIGNADO) {
+            throw new IllegalStateException(
+                    "El tiquete debe estar Ingresado o Asignado para iniciar proceso");
+        }
+
+        issue.setStatus(IssueStatus.EN_PROGRESO);
+        issue.setUpdatedAt(LocalDateTime.now());
+        issueRepository.save(issue);
     }
 
 }

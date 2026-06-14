@@ -209,16 +209,20 @@
                     });
                 }
 
-                if (role === 'SUPPORTER' || role === 'SUPERVISOR') {
+                if (role === 'SUPPORTER') {
                     cardSupportRequests.style.display = 'block';
+                    cardSupportRequests.addEventListener('click', function () {
+                        window.location.href = 'supporter.html'; // vista del soportista
+                    });
+                }
 
+                if (role === 'SUPERVISOR') {
+                    cardSupportRequests.style.display = 'block';
                     cardSupportRequests.addEventListener('click', function () {
                         window.location.href = 'supervisor.html';
                     });
-                }
-                if (role === 'SUPERVISOR') {
-                    cardRegisterSupport.style.display = 'block';
 
+                    cardRegisterSupport.style.display = 'block';
                     cardRegisterSupport.addEventListener('click', function () {
                         window.location.href = 'support-register.html';
                     });

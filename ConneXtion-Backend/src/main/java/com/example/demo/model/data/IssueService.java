@@ -161,4 +161,11 @@ public class IssueService {
         issue.setUpdatedAt(LocalDateTime.now());
         issueRepository.save(issue);
     }
+
+    public List<Issue> findActiveIssues() {
+        return issueRepository.findByStatusIn(
+                List.of(IssueStatus.INGRESADO, IssueStatus.ASIGNADO, IssueStatus.EN_PROGRESO)
+        );
+    }
+
 }
