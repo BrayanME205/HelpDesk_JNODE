@@ -38,7 +38,7 @@ async function loginUser() {
                 sessionStorage.setItem('clientServices', JSON.stringify(data.services));
             }
         }
-        
+
 
         window.location.href = 'dashboard.html';
 
@@ -143,15 +143,11 @@ async function logout() {
     try {
         await fetch(`${API}/auth/logout`, {
             method: 'POST',
-            credentials: 'include'   // ← envía la cookie para que el servidor invalide la sesión
+            credentials: 'include'
         });
     } finally {
-        const role = sessionStorage.getItem('role');
         sessionStorage.clear();
-        window.location.href =
-                (role === 'SUPPORTER' || role === 'SUPERVISOR')
-                ? 'support-login.html'
-                : 'index.html';
+        window.location.href = 'index.html';
     }
 }
 
@@ -174,7 +170,7 @@ async function checkSession() {
             const userName = sessionStorage.getItem('userName');
             const email = sessionStorage.getItem('email');
             const clientId = sessionStorage.getItem('clientId');
-            return { role, userId, userName, email, clientId };
+            return {role, userId, userName, email, clientId};
         }
 
         const data = await res.json();
@@ -198,7 +194,7 @@ async function checkSession() {
         const userName = sessionStorage.getItem('userName');
         const email = sessionStorage.getItem('email');
         const clientId = sessionStorage.getItem('clientId');
-        return { role, userId, userName, email, clientId };
+        return {role, userId, userName, email, clientId};
     }
 }
 
@@ -211,7 +207,7 @@ async function loadServices() {
         return;
 
     try {
-       const res = await fetch(`${API}/register/services`, {
+        const res = await fetch(`${API}/auth/services`, {
             credentials: 'include'
         });
 

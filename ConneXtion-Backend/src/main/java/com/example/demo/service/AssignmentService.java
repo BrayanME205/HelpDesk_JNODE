@@ -9,6 +9,7 @@ import com.example.demo.model.entities.Supporter;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.example.demo.websockets.ChatHandler;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,10 +19,12 @@ public class AssignmentService {
 
     private final IssueRepository issueRepository;
     private final SupporterRepository supporterRepository;
+    private final ChatHandler chatHandler;
 
-    public AssignmentService(IssueRepository issueRepository, SupporterRepository supporterRepository) {
+    public AssignmentService(IssueRepository issueRepository, SupporterRepository supporterRepository, ChatHandler chatHandler) {
         this.issueRepository = issueRepository;
         this.supporterRepository = supporterRepository;
+        this.chatHandler = chatHandler;
     }
 
     // CU-13 Asignacion manual
@@ -58,6 +61,8 @@ public class AssignmentService {
         issueRepository.save(issue);
 
         resolver.resolve(issue);
+
+        chatHandler.sendStateNotification(issueId, "El tiquete ha sido RESUELTO por el departamento técnico.");
     }
 
     // hilo de monitoreo automatico 
@@ -93,12 +98,30 @@ public class AssignmentService {
             }
         });
         monitorThread.setName("ConneXtion-Monitor-Thread");
-        monitorThread.setDaemon(true); 
+        monitorThread.setDaemon(true);
         monitorThread.start();
     }
 
     public List<Issue> getPendingIssues() {
         return issueRepository.findByStatus(IssueStatus.INGRESADO);
+    }
+
+    @Transactional
+    public void startIssue(Integer issueId) {
+        Issue issue = issueRepository.findById(issueId)
+                .orElseThrow(() -> new RuntimeException("Ticket no encontrado"));
+
+        if (issue.getStatus() != IssueStatus.INGRESADO
+                && issue.getStatus() != IssueStatus.ASIGNADO) {
+            throw new IllegalStateException(
+                    "El tiquete debe estar Ingresado o Asignado para iniciar proceso");
+        }
+
+        issue.setStatus(IssueStatus.EN_PROGRESO);
+        issue.setUpdatedAt(LocalDateTime.now());
+        issueRepository.save(issue);
+
+        chatHandler.sendStateNotification(issueId, "El soportista ha iniciado la atención de tu solicitud (Estado: EN PROGRESO).");
     }
 
 }

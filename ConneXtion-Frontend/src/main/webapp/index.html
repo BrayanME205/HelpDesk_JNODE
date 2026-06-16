@@ -30,13 +30,10 @@
             <div class="link-row">
                 ¿No tienes cuenta? <a href="register.html">Regístrate aquí</a>
             </div>
-            <div class="link-row" style="margin-top:.5rem">
-                ¿Eres de soporte? <a href="support-login.html">Acceso soporte</a>
-            </div>
         </div>
         <script src="js/auth.js"></script>
         <script>
-               if (sessionStorage.getItem('userId')) {
+                if (sessionStorage.getItem('userId')) {
                     window.location.href = 'dashboard.html';
                 }
         </script>
