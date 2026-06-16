@@ -1,18 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.example.demo.controller;
 
 import com.example.demo.model.data.SupporterRepository;
-import com.example.demo.model.entities.Supporter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/supporters")
+@CrossOrigin(originPatterns = "*", allowCredentials = "true")
 public class SupporterController {
 
     private final SupporterRepository supporterRepository;
@@ -22,13 +23,25 @@ public class SupporterController {
     }
 
     @GetMapping
-    public List<Map<String, Object>> getSupporters() {
-        return supporterRepository.findAll().stream()
-            .filter(s -> !s.getIsSupervisor() && s.getIsActive())
-            .map(s -> Map.<String, Object>of(
-                "id", s.getSupporterId(),
-                "name", s.getName() + " " + s.getFirstSurname()
-            ))
-            .collect(Collectors.toList());
+    public ResponseEntity<?> getSupporters(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("role") == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", "Sesión requerida."));
+        }
+
+        List<Map<String, Object>> supporters = supporterRepository.findAll()
+                .stream()
+                .filter(s -> Boolean.TRUE.equals(s.getIsActive()))
+                .filter(s -> !Boolean.TRUE.equals(s.getIsSupervisor()))
+                .map(s -> {
+                    Map<String, Object> dto = new HashMap<>();
+                    dto.put("id", s.getSupporterId());
+                    dto.put("name", s.getName() + " " + s.getFirstSurname());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(supporters);
     }
 }

@@ -72,5 +72,4 @@ public class CreateIssueRequest {
     public void setReferenceAddress(String referenceAddress) {
         this.referenceAddress = referenceAddress;
     }
-
 }

@@ -1,6 +1,5 @@
 const API = 'http://localhost:8081/api';
 
-// ── CU2 / CU8 — Login ────────────────────────────────────────────────────
 async function loginUser() {
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
@@ -38,7 +37,7 @@ async function loginUser() {
                 sessionStorage.setItem('clientServices', JSON.stringify(data.services));
             }
         }
-        
+
 
         window.location.href = 'dashboard.html';
 
@@ -47,7 +46,6 @@ async function loginUser() {
     }
 }
 
-// ── CU1 — Registro cliente ───────────────────────────────────────────────
 async function registerClient() {
     const name = document.getElementById('name').value.trim();
     const firstSurname = document.getElementById('firstSurname').value.trim();
@@ -96,7 +94,6 @@ async function registerClient() {
     }
 }
 
-// ── CU7 — Registro soportista ────────────────────────────────────────────
 async function registerSupporter() {
     const name = document.getElementById('name').value.trim();
     const firstSurname = document.getElementById('firstSurname').value.trim();
@@ -138,24 +135,18 @@ async function registerSupporter() {
     }
 }
 
-// ── CU3 / CU9 — Logout ───────────────────────────────────────────────────
 async function logout() {
     try {
         await fetch(`${API}/auth/logout`, {
             method: 'POST',
-            credentials: 'include'   // ← envía la cookie para que el servidor invalide la sesión
+            credentials: 'include'
         });
     } finally {
-        const role = sessionStorage.getItem('role');
         sessionStorage.clear();
-        window.location.href =
-                (role === 'SUPPORTER' || role === 'SUPERVISOR')
-                ? 'support-login.html'
-                : 'index.html';
+        window.location.href = 'index.html';
     }
 }
 
-// ── Verificar sesión al cargar páginas protegidas ─────────────────────────
 async function checkSession() {
     const role = sessionStorage.getItem('role');
     const userId = sessionStorage.getItem('userId');
@@ -174,7 +165,7 @@ async function checkSession() {
             const userName = sessionStorage.getItem('userName');
             const email = sessionStorage.getItem('email');
             const clientId = sessionStorage.getItem('clientId');
-            return { role, userId, userName, email, clientId };
+            return {role, userId, userName, email, clientId};
         }
 
         const data = await res.json();
@@ -198,20 +189,17 @@ async function checkSession() {
         const userName = sessionStorage.getItem('userName');
         const email = sessionStorage.getItem('email');
         const clientId = sessionStorage.getItem('clientId');
-        return { role, userId, userName, email, clientId };
+        return {role, userId, userName, email, clientId};
     }
 }
 
-
-
-// Cargar servicios 
 async function loadServices() {
     const grid = document.getElementById('servicesGrid');
     if (!grid)
         return;
 
     try {
-       const res = await fetch(`${API}/register/services`, {
+        const res = await fetch(`${API}/auth/services`, {
             credentials: 'include'
         });
 
@@ -242,8 +230,6 @@ async function loadServices() {
     }
 }
 
-
-// ── Helpers ───────────────────────────────────────────────────────────────
 function getCheckedServices() {
     return Array.from(
             document.querySelectorAll('#servicesGrid input:checked')

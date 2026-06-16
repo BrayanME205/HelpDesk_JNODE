@@ -48,49 +48,108 @@ public class Client {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-        name = "Client_Service",
-        joinColumns = @JoinColumn(name = "client_id"),
-        inverseJoinColumns = @JoinColumn(name = "service_id")
+            name = "Client_Service",
+            joinColumns = @JoinColumn(name = "client_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id")
     )
     private Set<Service> services = new HashSet<>();
 
-    // Constructor vacío obligatorio para JPA
-    public Client() {}
+    public Client() {
+    }
 
-    // Getters y Setters
-    public Integer getClientId()               { return clientId; }
-    public void setClientId(Integer clientId)  { this.clientId = clientId; }
+    public Integer getClientId() {
+        return clientId;
+    }
 
-    public String getName()                    { return name; }
-    public void setName(String name)           { this.name = name; }
+    public void setClientId(Integer clientId) {
+        this.clientId = clientId;
+    }
 
-    public String getFirstSurname()            { return firstSurname; }
-    public void setFirstSurname(String v)      { this.firstSurname = v; }
+    public String getName() {
+        return name;
+    }
 
-    public String getSecondSurname()           { return secondSurname; }
-    public void setSecondSurname(String v)     { this.secondSurname = v; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getAddress()                 { return address; }
-    public void setAddress(String address)     { this.address = address; }
+    public String getFirstSurname() {
+        return firstSurname;
+    }
 
-    public String getPhone()                   { return phone; }
-    public void setPhone(String phone)         { this.phone = phone; }
+    public void setFirstSurname(String v) {
+        this.firstSurname = v;
+    }
 
-    public String getSecondContact()           { return secondContact; }
-    public void setSecondContact(String v)     { this.secondContact = v; }
+    public String getSecondSurname() {
+        return secondSurname;
+    }
 
-    public String getEmail()                   { return email; }
-    public void setEmail(String email)         { this.email = email; }
+    public void setSecondSurname(String v) {
+        this.secondSurname = v;
+    }
 
-    public String getPasswordHash()            { return passwordHash; }
-    public void setPasswordHash(String v)      { this.passwordHash = v; }
+    public String getAddress() {
+        return address;
+    }
 
-    public Boolean getIsActive()               { return isActive; }
-    public void setIsActive(Boolean isActive)  { this.isActive = isActive; }
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-    public LocalDateTime getCreatedAt()        { return createdAt; }
-    public void setCreatedAt(LocalDateTime v)  { this.createdAt = v; }
+    public String getPhone() {
+        return phone;
+    }
 
-    public Set<Service> getServices()          { return services; }
-    public void setServices(Set<Service> s)    { this.services = s; }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getSecondContact() {
+        return secondContact;
+    }
+
+    public void setSecondContact(String v) {
+        this.secondContact = v;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String v) {
+        this.passwordHash = v;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime v) {
+        this.createdAt = v;
+    }
+
+    public Set<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(Set<Service> s) {
+        this.services = s;
+    }
 }

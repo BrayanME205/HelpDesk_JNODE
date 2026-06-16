@@ -8,13 +8,13 @@ import com.example.demo.model.data.SupporterRepository;
 import com.example.demo.model.data.ServiceRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/register")
+@RequestMapping("/api/auth")
+@CrossOrigin(originPatterns = "*", allowCredentials = "true")
 public class RegisterController {
 
     private final ClientRepository clientRepository;
@@ -29,7 +29,6 @@ public class RegisterController {
         this.serviceRepository = serviceRepository;
     }
 
-    // CU1 — Registrar cliente
     @PostMapping("/register")
     public ResponseEntity<?> registerClient(@RequestBody Map<String, Object> body) {
 
@@ -68,7 +67,6 @@ public class RegisterController {
         return ResponseEntity.ok(Map.of("message", "Cliente registrado exitosamente."));
     }
 
-    // CU7 — Registrar soportista / supervisor
     @PostMapping("/register/support")
     public ResponseEntity<?> registerSupporter(@RequestBody Map<String, Object> body) {
 
@@ -104,7 +102,6 @@ public class RegisterController {
         return ResponseEntity.ok(Map.of("message", "Usuario de soporte registrado exitosamente."));
     }
 
-    // Listar servicios (para los formularios)
     @GetMapping("/services")
     public ResponseEntity<?> getServices() {
         return ResponseEntity.ok(serviceRepository.findAll());

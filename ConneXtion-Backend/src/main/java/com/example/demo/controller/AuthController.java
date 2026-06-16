@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(originPatterns = "*", allowCredentials = "true")
 public class AuthController {
 
     private final AuthService authService;
@@ -25,7 +26,6 @@ public class AuthController {
         this.authService = authService;
     }
 
-    // Helper para mapear servicios a JSON simple
     private List<Map<String, Object>> mapServices(Set<Service> services) {
         return services.stream()
                 .map(service -> Map.<String, Object>of(
@@ -35,7 +35,6 @@ public class AuthController {
                 .collect(Collectors.toList());
     }
 
-    // CU2 / CU8 — Login unificado con sesión HTTP
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> body,
             HttpServletRequest request) {
@@ -93,7 +92,6 @@ public class AuthController {
                 .body(Map.of("message", "No se pudo completar el login."));
     }
 
-    // CU3 / CU9 — Logout
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -104,7 +102,6 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("message", "Sesión cerrada exitosamente."));
     }
 
-    // Verificar sesión activa
     @GetMapping("/session")
     public ResponseEntity<?> getSession(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -119,7 +116,6 @@ public class AuthController {
         String userName = (String) session.getAttribute("userName");
         String email = (String) session.getAttribute("email");
 
-        // Si es cliente, volver a cargar servicios desde el usuario autenticado
         if ("CLIENT".equals(role)) {
             Object user = authService.findClientById(userId);
 

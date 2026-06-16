@@ -43,42 +43,92 @@ public class Supporter {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-        name = "Supporter_Service",
-        joinColumns = @JoinColumn(name = "supporter_id"),
-        inverseJoinColumns = @JoinColumn(name = "service_id")
+            name = "Supporter_Service",
+            joinColumns = @JoinColumn(name = "supporter_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id")
     )
     private Set<Service> services = new HashSet<>();
 
-    public Supporter() {}
+    public Supporter() {
+    }
 
-    // Getters y Setters
-    public Integer getSupporterId()              { return supporterId; }
-    public void setSupporterId(Integer v)        { this.supporterId = v; }
+    public Integer getSupporterId() {
+        return supporterId;
+    }
 
-    public String getName()                      { return name; }
-    public void setName(String name)             { this.name = name; }
+    public void setSupporterId(Integer v) {
+        this.supporterId = v;
+    }
 
-    public String getFirstSurname()              { return firstSurname; }
-    public void setFirstSurname(String v)        { this.firstSurname = v; }
+    public String getName() {
+        return name;
+    }
 
-    public String getSecondSurname()             { return secondSurname; }
-    public void setSecondSurname(String v)       { this.secondSurname = v; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getEmail()                     { return email; }
-    public void setEmail(String email)           { this.email = email; }
+    public String getFirstSurname() {
+        return firstSurname;
+    }
 
-    public String getPasswordHash()              { return passwordHash; }
-    public void setPasswordHash(String v)        { this.passwordHash = v; }
+    public void setFirstSurname(String v) {
+        this.firstSurname = v;
+    }
 
-    public Boolean getIsSupervisor()             { return isSupervisor; }
-    public void setIsSupervisor(Boolean v)       { this.isSupervisor = v; }
+    public String getSecondSurname() {
+        return secondSurname;
+    }
 
-    public Boolean getIsActive()                 { return isActive; }
-    public void setIsActive(Boolean isActive)    { this.isActive = isActive; }
+    public void setSecondSurname(String v) {
+        this.secondSurname = v;
+    }
 
-    public LocalDateTime getCreatedAt()          { return createdAt; }
-    public void setCreatedAt(LocalDateTime v)    { this.createdAt = v; }
+    public String getEmail() {
+        return email;
+    }
 
-    public Set<Service> getServices()            { return services; }
-    public void setServices(Set<Service> s)      { this.services = s; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String v) {
+        this.passwordHash = v;
+    }
+
+    public Boolean getIsSupervisor() {
+        return isSupervisor;
+    }
+
+    public void setIsSupervisor(Boolean v) {
+        this.isSupervisor = v;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime v) {
+        this.createdAt = v;
+    }
+
+    public Set<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(Set<Service> s) {
+        this.services = s;
+    }
 }

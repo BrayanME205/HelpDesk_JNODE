@@ -16,11 +16,22 @@ public class Service {
     @Column(name = "name", nullable = false, unique = true, length = 100)
     private String name;
 
-    public Service() {}
+    public Service() {
+    }
 
-    public Integer getServiceId()           { return serviceId; }
-    public void setServiceId(Integer v)     { this.serviceId = v; }
+    public Integer getServiceId() {
+        return serviceId;
+    }
 
-    public String getName()                 { return name; }
-    public void setName(String name)        { this.name = name; }
+    public void setServiceId(Integer v) {
+        this.serviceId = v;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

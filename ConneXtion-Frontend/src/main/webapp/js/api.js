@@ -4,7 +4,7 @@ async function apiRequest(endpoint, method = "GET", body = null) {
     const config = {
         method,
         headers: {"Content-Type": "application/json"},
-        credentials: "include"  
+        credentials: "include"
     };
 
     if (body) {
