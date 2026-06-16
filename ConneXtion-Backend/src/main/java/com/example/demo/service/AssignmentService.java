@@ -10,7 +10,6 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.websockets.ChatHandler;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,7 +26,6 @@ public class AssignmentService {
         this.chatHandler = chatHandler;
     }
 
-    // CU-13 Asignacion manual
     @Transactional
     public void assignIssue(Integer issueId, Integer supporterId) {
         Issue issue = issueRepository.findById(issueId)
@@ -44,7 +42,6 @@ public class AssignmentService {
         System.out.println("Ticket " + issueId + " asignado manualmente al soportista " + supporterId);
     }
 
-    //POO Polimorfismo
     @Transactional
     public void resolveIssue(Integer issueId, String comment, com.example.demo.service.IssueResolver resolver) {
         Issue issue = issueRepository.findById(issueId)
@@ -65,7 +62,6 @@ public class AssignmentService {
         chatHandler.sendStateNotification(issueId, "El tiquete ha sido RESUELTO por el departamento técnico.");
     }
 
-    // hilo de monitoreo automatico 
     @PostConstruct
     public void startIssueMonitorThread() {
         Thread monitorThread = new Thread(() -> {
@@ -123,5 +119,4 @@ public class AssignmentService {
 
         chatHandler.sendStateNotification(issueId, "El soportista ha iniciado la atención de tu solicitud (Estado: EN PROGRESO).");
     }
-
 }

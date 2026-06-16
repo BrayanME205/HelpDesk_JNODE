@@ -10,18 +10,17 @@ import java.util.Optional;
 @Service
 public class AuthService {
 
-    private final ClientRepository    clientRepository;
+    private final ClientRepository clientRepository;
     private final SupporterRepository supporterRepository;
 
     public AuthService(ClientRepository clientRepository,
-                       SupporterRepository supporterRepository) {
-        this.clientRepository    = clientRepository;
+            SupporterRepository supporterRepository) {
+        this.clientRepository = clientRepository;
         this.supporterRepository = supporterRepository;
     }
 
     public Object login(String email, String password) {
 
-        // Buscar en clientes
         Optional<Client> clientOpt = clientRepository.findByEmail(email);
         if (clientOpt.isPresent()) {
             Client client = clientOpt.get();
@@ -30,7 +29,6 @@ public class AuthService {
             }
         }
 
-        // Buscar en soporte
         Optional<Supporter> supporterOpt = supporterRepository.findByEmail(email);
         if (supporterOpt.isPresent()) {
             Supporter supporter = supporterOpt.get();
@@ -41,8 +39,8 @@ public class AuthService {
 
         return null;
     }
-    
+
     public Client findClientById(Integer clientId) {
-    return clientRepository.findById(clientId).orElse(null);
-}
+        return clientRepository.findById(clientId).orElse(null);
+    }
 }

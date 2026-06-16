@@ -5,16 +5,12 @@ import com.example.demo.model.data.CreateIssueRequest;
 import com.example.demo.model.data.IssueService;
 import com.example.demo.model.entities.Issue;
 import com.example.demo.model.entities.IssueComment;
-import com.example.demo.model.entities.IssueStatus;
 import com.example.demo.service.AssignmentService;
 import com.example.demo.repository.IssueRepository;
 import com.example.demo.service.SoftwareResolver;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import com.example.demo.model.entities.Client;
-import com.example.demo.model.entities.Supporter;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +103,6 @@ public class IssueController {
         return response;
     }
 
-    //soporte/asignación
     @GetMapping("/pending")
     public List<Issue> getPendingIssues() {
         return assignmentService.getPendingIssues();
@@ -182,5 +177,4 @@ public List<Map<String, Object>> listSupporterIssues(@PathVariable Integer suppo
             return item;
         }).toList();
     }
-
 }

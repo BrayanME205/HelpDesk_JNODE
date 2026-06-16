@@ -1,6 +1,5 @@
 const API = 'http://localhost:8081/api';
 
-// ── CU2 / CU8 — Login ────────────────────────────────────────────────────
 async function loginUser() {
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
@@ -47,7 +46,6 @@ async function loginUser() {
     }
 }
 
-// ── CU1 — Registro cliente ───────────────────────────────────────────────
 async function registerClient() {
     const name = document.getElementById('name').value.trim();
     const firstSurname = document.getElementById('firstSurname').value.trim();
@@ -96,7 +94,6 @@ async function registerClient() {
     }
 }
 
-// ── CU7 — Registro soportista ────────────────────────────────────────────
 async function registerSupporter() {
     const name = document.getElementById('name').value.trim();
     const firstSurname = document.getElementById('firstSurname').value.trim();
@@ -138,7 +135,6 @@ async function registerSupporter() {
     }
 }
 
-// ── CU3 / CU9 — Logout ───────────────────────────────────────────────────
 async function logout() {
     try {
         await fetch(`${API}/auth/logout`, {
@@ -151,7 +147,6 @@ async function logout() {
     }
 }
 
-// ── Verificar sesión al cargar páginas protegidas ─────────────────────────
 async function checkSession() {
     const role = sessionStorage.getItem('role');
     const userId = sessionStorage.getItem('userId');
@@ -198,9 +193,6 @@ async function checkSession() {
     }
 }
 
-
-
-// Cargar servicios 
 async function loadServices() {
     const grid = document.getElementById('servicesGrid');
     if (!grid)
@@ -238,8 +230,6 @@ async function loadServices() {
     }
 }
 
-
-// ── Helpers ───────────────────────────────────────────────────────────────
 function getCheckedServices() {
     return Array.from(
             document.querySelectorAll('#servicesGrid input:checked')

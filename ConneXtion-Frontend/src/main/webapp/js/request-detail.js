@@ -3,11 +3,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!session)
         return;
 
-    /* renderHeader(
-     "Detalle de solicitud",
-     `Cliente: ${sessionStorage.getItem("userName") || sessionStorage.getItem("email")}`
-     );*/
-
     const issueId = getIssueIdFromQueryString();
     const detailContainer = document.getElementById("issueDetail");
     const commentsList = document.getElementById("commentsList");
@@ -35,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
             const payload = {
-                clientId: parseInt(sessionStorage.getItem("userId")), // Asegura que use el ID de la sesión activa
+                clientId: parseInt(sessionStorage.getItem("userId")), 
                 description: description
             };
 

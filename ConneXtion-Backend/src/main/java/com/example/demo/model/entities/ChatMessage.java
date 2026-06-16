@@ -30,7 +30,6 @@ public class ChatMessage {
     @Column(name = "sent_at")
     private LocalDateTime sentAt;
 
-    // Constructores, Getters y Setters
     public ChatMessage() {
     }
 

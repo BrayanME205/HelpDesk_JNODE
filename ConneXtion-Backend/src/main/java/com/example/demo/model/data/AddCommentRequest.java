@@ -1,6 +1,5 @@
 package com.example.demo.model.data;
 
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -29,6 +28,4 @@ public class AddCommentRequest {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    
 }

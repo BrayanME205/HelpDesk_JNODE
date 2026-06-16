@@ -184,7 +184,7 @@ input:focus {
         padding: 1rem .5rem;
     }
 }
-/* ── resolve.html ─────────────────────────────────────────── */
+
 input[type="number"] {
     width: 100%;
     padding: .65rem 1rem;
@@ -224,7 +224,7 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background: #004494;
 }
-/* ── Dashboard ─────────────────────────────────────────────── */
+
 body.dashboard {
     display: block;
     padding: 1.5rem;
@@ -326,7 +326,6 @@ body.dashboard {
     font-weight: 500;
 }
 
-/* ── Badges de Estado para Tablas de Soporte ──────────────── */
 .badge-status {
     display: inline-block;
     padding: .25rem .6rem;
@@ -360,7 +359,6 @@ body.dashboard {
     border: 1px solid #e0e0e0;
 }
 
-/* Contenedor Flex para mantener botones alineados simétricamente */
 .actions-flex-container {
     display: flex;
     gap: 6px;
@@ -369,7 +367,7 @@ body.dashboard {
 }
 
 .actions-flex-container .btn {
-    margin-top: 0 !important; /* Quita el margen superior por defecto de tus .btn */
+    margin-top: 0 !important;
     padding: .5rem .75rem;
     font-size: .85rem;
     display: inline-flex;

@@ -119,7 +119,6 @@ async function startIssue(issueId) {
 
 window.onload = loadPendingIssues;
 
-// Polling de notificaciones con Toast integrado
 setInterval(async () => {
     const role = sessionStorage.getItem("role");
     const userId = sessionStorage.getItem("userId");

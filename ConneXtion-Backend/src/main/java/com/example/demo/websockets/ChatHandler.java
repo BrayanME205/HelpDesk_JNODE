@@ -53,7 +53,7 @@ public class ChatHandler extends TextWebSocketHandler {
                     dbMessage.setSenderRole(jsonNode.get("senderRole").asText());
                     dbMessage.setContent(jsonNode.get("content").asText());
                     dbMessage.setSentAt(java.time.LocalDateTime.now());
-                    
+
                     chatMessageRepository.save(dbMessage);
                 }
             } catch (Exception e) {
@@ -61,7 +61,6 @@ public class ChatHandler extends TextWebSocketHandler {
                 e.printStackTrace();
             }
 
-            // Broadcast en tiempo real a la sala
             synchronized (ticketRooms.get(issueId)) {
                 for (WebSocketSession webSocketSession : ticketRooms.get(issueId)) {
                     if (webSocketSession.isOpen()) {

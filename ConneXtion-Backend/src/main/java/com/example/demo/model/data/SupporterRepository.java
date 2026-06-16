@@ -7,8 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface SupporterRepository extends JpaRepository<Supporter, Integer> {
-
     Optional<Supporter> findByEmail(String email);
-
     boolean existsByEmail(String email);
 }

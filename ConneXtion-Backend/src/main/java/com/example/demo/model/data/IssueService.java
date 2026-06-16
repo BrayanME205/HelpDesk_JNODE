@@ -111,7 +111,6 @@ public class IssueService {
         Issue issue = issueRepository.findById(issueId)
                 .orElseThrow(() -> new RuntimeException("Tiquete no encontrado"));
 
-        // Convertimos el string a Enum. Si el estado viene en mayúsculas desde JS, funciona directo.
         issue.setStatus(IssueStatus.valueOf(newStatus.toUpperCase()));
         issue.setUpdatedAt(LocalDateTime.now());
 
@@ -120,14 +119,12 @@ public class IssueService {
 
     @Transactional
     public void addTechnicalNote(Integer issueId, Integer supporterId, String content) {
-        // Buscamos las entidades
         Issue issue = issueRepository.findById(issueId)
                 .orElseThrow(() -> new RuntimeException("Tiquete no encontrado"));
 
         Supporter supporter = supporterRepository.findById(supporterId)
                 .orElseThrow(() -> new RuntimeException("Soportista no encontrado"));
 
-        // Creamos el comentario (nota técnica)
         IssueComment note = new IssueComment();
         note.setIssue(issue);
         note.setSupporterAuthor(supporter);
@@ -150,14 +147,12 @@ public class IssueService {
 
         IssueComment comment = new IssueComment();
         comment.setIssue(issue);
-        comment.setSupporterAuthor(supporter); // El soporte es el autor
-        comment.setClientAuthor(null);         // No es el cliente
+        comment.setSupporterAuthor(supporter); 
+        comment.setClientAuthor(null);         
         comment.setDescription(content);
         comment.setCommentTimestamp(LocalDateTime.now());
 
         issueCommentRepository.save(comment);
-
-        // Opcional: Actualizar fecha de actualización del tiquete
         issue.setUpdatedAt(LocalDateTime.now());
         issueRepository.save(issue);
     }
@@ -167,5 +162,4 @@ public class IssueService {
                 List.of(IssueStatus.INGRESADO, IssueStatus.ASIGNADO, IssueStatus.EN_PROGRESO)
         );
     }
-
 }

@@ -1,11 +1,18 @@
-# Carpetas privadas de configuración local
+# Carpetas privadas de configuración local de NetBeans
 nbproject/private/
+build/
+nbdist/
+dist/
 
 # Archivos compilados generados automáticamente
 target/
 *.class
+*.jar
+*.war
 
-# Credenciales y secretos
+# Credenciales y secretos locales (este sí se queda afuera)
 application-secret.properties
 
-src/main/resources/application.properties
+# Archivos de sistema o IDE
+.DS_Store
+.nb-gradle/

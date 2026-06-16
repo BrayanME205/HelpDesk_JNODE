@@ -23,8 +23,6 @@ async function loadMyIssues() {
         issues.forEach(issue => {
             const tr = document.createElement('tr');
             const id = issue.issueId;
-            
-            // Renderizado de celdas de acción estilizadas sin emojis y simétricas
             const actionCell = issue.status === 'ASIGNADO' ? `
                 <td>
                     <button onclick="startIssue(${id})" 
@@ -90,11 +88,11 @@ function goToResolve(issueId) {
 
 window.onload = loadMyIssues;
 
-// Polling de notificaciones con Toast integrado
 setInterval(async () => {
     const role = sessionStorage.getItem("role");
     const userId = sessionStorage.getItem("userId");
-    if (!userId) return;
+    if (!userId)
+        return;
 
     try {
         const res = await fetch(`http://localhost:8081/api/issues/unread-alerts/${userId}?role=${role}`);

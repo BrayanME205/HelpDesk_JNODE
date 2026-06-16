@@ -1,4 +1,3 @@
-// CONFIGURATION
 const urlParams = new URLSearchParams(window.location.search);
 let currentIssueId = urlParams.get('issueId');
 
@@ -10,19 +9,15 @@ if (!currentIssueId) {
 const WS_URL = `ws://localhost:8081/chat?issueId=${currentIssueId}`;
 let webSocket;
 
-// DECISIÓN DE DISEÑO: Extraer datos reales del inicio de sesión 
 const myUserId = sessionStorage.getItem('userId') || "ID_FANTASMA";
 const myUserName = sessionStorage.getItem('userName') || "Usuario ConneXtion";
-const myUserRole = sessionStorage.getItem('role') || "CLIENT"; // CLIENT, SUPPORTER, o SUPERVISOR
-
-// DOM ELEMENTS
+const myUserRole = sessionStorage.getItem('role') || "CLIENT"; 
 const messageList = document.getElementById("message-list");
 const messageInput = document.getElementById("message-input");
 const sendButton = document.getElementById("send-button");
 const chatContainer = document.getElementById("chat-container");
 const statusIndicator = document.getElementById("connection-status");
 
-// WEBSOCKET FUNCTIONS
 function connectWebSocket() {
     webSocket = new WebSocket(WS_URL);
 
@@ -59,11 +54,10 @@ function connectWebSocket() {
     webSocket.onclose = function (event) {
         updateStatus("Disconnected", "status-disconnected");
         appendMessage("System", "SERVER", "Connection lost. Reconnecting in 5 seconds...", "message-server");
-        setTimeout(connectWebSocket, 5000); // Intenta reconectar automáticamente
+        setTimeout(connectWebSocket, 5000);
     };
 }
 
-// UI HANDLING FUNCTIONS
 function sendMessage() {
     const message = messageInput.value.trim();
 
@@ -86,7 +80,6 @@ function sendMessage() {
     }
 }
 
-// Renderizado estructurado y limpio para la UI
 function appendMessage(senderName, role, messageText, cssClass) {
     const listItem = document.createElement("li");
     listItem.classList.add("message-item", cssClass);
@@ -107,7 +100,6 @@ function updateStatus(text, cssClass) {
     statusIndicator.className = cssClass;
 }
 
-// Alerta Push Visual en Pantalla sin recargar
 function showPushToast(text) {
     const toast = document.createElement("div");
     toast.style.position = "fixed";
@@ -127,7 +119,6 @@ function showPushToast(text) {
     }, 4000);
 }
 
-// Consulta a SQL Server por mensajes viejos y los renderiza de forma cronológica
 async function loadChatHistory() {
     try {
         console.log(`Buscando historial para Issue ID: ${currentIssueId}. Mis datos locales son - ID: ${myUserId}, Rol: ${myUserRole}`);
@@ -137,11 +128,9 @@ async function loadChatHistory() {
             const messages = await response.json();
             console.log("Mensajes crudos recibidos del backend:", messages);
 
-            // Limpiar la lista antes de renderizar para evitar duplicados
             messageList.innerHTML = "";
 
             messages.forEach(msg => {
-                // Forzamos conversión limpia a String y eliminamos espacios
                 const senderIdStr = String(msg.senderId).trim();
                 const myUserIdStr = String(myUserId).trim();
 
@@ -164,7 +153,6 @@ async function loadChatHistory() {
     }
 }
 
-// EVENT LISTENERS & INITIALIZATION
 function setupEventListeners() {
     sendButton.addEventListener("click", sendMessage);
     messageInput.addEventListener("keypress", function (event) {
