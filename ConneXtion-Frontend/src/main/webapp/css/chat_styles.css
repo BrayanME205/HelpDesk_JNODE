@@ -47,21 +47,27 @@ body {
 }
 
 .message-item {
-    margin-bottom: 8px;
-    padding: 8px;
-    border-radius: 4px;
-    background-color: #e9ecef;
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    border-radius: 12px; 
+    max-width: 80%;
+    clear: both;
+    font-size: 0.95rem;
+    line-height: 1.4;
 }
 
 .message-client {
-    background-color: #007bff;
+    background-color: #0056b3;
     color: white;
-    text-align: right;
+    float: right;
+    border-bottom-right-radius: 2px; 
 }
 
 .message-server {
-    background-color: #6c757d;
-    color: white;
+    background-color: #e9ecef;
+    color: #333;
+    float: left;
+    border-bottom-left-radius: 2px;
 }
 
 /* --- Input Area --- */

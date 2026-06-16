@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ConneXtion – Inicio</title>
+        <link rel="stylesheet" href="css/styles.css">
+
+    </head>
+    <body class="dashboard">
+
+        <div class="navbar">
+            <div>
+                <h1>ConneXtion Help Desk</h1>
+                <div class="user-info" id="userInfo"></div>
+            </div>
+            <button onclick="logout()">Cerrar sesión</button>
+        </div>
+
+        <div class="welcome-card">
+            <h2>
+                Bienvenido, <span id="userName"></span>
+                <span class="role-badge" id="roleBadge"></span>
+            </h2>
+            <p>Selecciona una opción para continuar.</p>
+        </div>
+
+        <div class="actions-grid">
+
+            <div class="action-card" id="cardMyRequests">
+                <div class="icon">📋</div>
+                <div class="label">Mis solicitudes</div>
+            </div>
+
+            <div class="action-card" id="cardNewRequest">
+                <div class="icon">➕</div>
+                <div class="label">Nueva solicitud</div>
+            </div>
+
+            <div class="action-card" id="cardSupportRequests">
+                <div class="icon">📋</div>
+                <div class="label">Ver solicitudes</div>
+            </div>
+
+            <div class="action-card" id="cardRegisterSupport">
+                <div class="icon">👤</div>
+                <div class="label">Registrar soportista</div>
+            </div>
+
+        </div>
+
+        <script src="js/auth.js"></script>
+        <script>
+                const role = sessionStorage.getItem('role');
+                const name = sessionStorage.getItem('userName');
+                const email = sessionStorage.getItem('email') || '';
+
+                if (!role || !name) {
+                    window.location.href = 'index.html';
+                }
+
+                document.getElementById('userName').textContent = name;
+                document.getElementById('userInfo').textContent = email;
+
+                const labels = {
+                    CLIENT: 'Cliente',
+                    SUPPORTER: 'Soportista',
+                    SUPERVISOR: 'Supervisor'
+                };
+
+                const badge = document.getElementById('roleBadge');
+                badge.textContent = labels[role] || role;
+                badge.className = `role-badge badge-${role}`;
+
+                const cardMyRequests = document.getElementById('cardMyRequests');
+                const cardNewRequest = document.getElementById('cardNewRequest');
+                const cardSupportRequests = document.getElementById('cardSupportRequests');
+                const cardRegisterSupport = document.getElementById('cardRegisterSupport');
+
+                if (role === 'CLIENT') {
+                    cardMyRequests.style.display = 'block';
+                    cardNewRequest.style.display = 'block';
+
+                    cardMyRequests.addEventListener('click', function () {
+                        window.location.href = 'my-requests.html';
+                    });
+
+                    cardNewRequest.addEventListener('click', function () {
+                        window.location.href = 'new-request.html';
+                    });
+                }
+
+                if (role === 'SUPPORTER') {
+                    cardSupportRequests.style.display = 'block';
+                    cardSupportRequests.addEventListener('click', function () {
+                        window.location.href = 'supporter.html'; // vista del soportista
+                    });
+                }
+
+                if (role === 'SUPERVISOR') {
+                    cardSupportRequests.style.display = 'block';
+                    cardSupportRequests.addEventListener('click', function () {
+                        window.location.href = 'supervisor.html';
+                    });
+
+                    cardRegisterSupport.style.display = 'block';
+                    cardRegisterSupport.addEventListener('click', function () {
+                        window.location.href = 'support-register.html';
+                    });
+                }
+        </script>
+
+    </body>
+</html>

@@ -10,9 +10,16 @@
     <body>
 
         <main class="chat-wrapper">
-            <header>
-                <h1>Live Support Chat</h1>
-                <p id="connection-status" class="status-disconnected">Disconnected</p>
+            <header style="display: flex; justify-content: space-between; align-items: center; wrap: wrap;">
+                <div>
+                    <h1>Live Support Chat</h1>
+                    <p id="connection-status" class="status-disconnected">Disconnected</p>
+                </div>
+
+                <button onclick="window.location.href = 'dashboard.html'" 
+                        style="background-color: #6c757d; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                    <- Volver al Dashboard
+                </button>
             </header>
 
             <div id="chat-container">

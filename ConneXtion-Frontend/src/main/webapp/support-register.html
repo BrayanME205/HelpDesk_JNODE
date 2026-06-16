@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ConneXtion – Registrar Soportista</title>
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body>
+        <div class="container wide">
+            <div class="logo">
+                <h1>ConneXtion</h1>
+                <p>Registro de usuarios de soporte</p>
+            </div>
+
+            <div id="alertMsg" class="alert"></div>
+
+            <div class="form-group">
+                <label>Nombre *</label>
+                <input type="text" id="name" placeholder="Nombre">
+            </div>
+            <div class="form-group">
+                <label>Primer apellido *</label>
+                <input type="text" id="firstSurname" placeholder="Primer apellido">
+            </div>
+            <div class="form-group">
+                <label>Segundo apellido *</label>
+                <input type="text" id="secondSurname" placeholder="Segundo apellido">
+            </div>
+            <div class="form-group">
+                <label>Correo electrónico *</label>
+                <input type="email" id="email" placeholder="correo@connextion.com">
+            </div>
+            <div class="form-group">
+                <label>Contraseña *</label>
+                <input type="password" id="password" placeholder="Mínimo 6 caracteres">
+            </div>
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="isSupervisor">
+                    Asignar como supervisor
+                </label>
+            </div>
+            <div class="form-group">
+                <label>Servicios que atiende *</label>
+                <div class="services-grid" id="servicesGrid">
+                    <p style="color:#999; font-size:.85rem">Cargando servicios...</p>
+                </div>
+            </div>
+
+            <button class="btn" onclick="registerSupporter()">Registrar usuario</button>
+            <button class="btn btn-secondary" onclick="window.location.href = 'dashboard.html'">
+                Cancelar
+            </button>
+        </div>
+        <script src="js/auth.js"></script>
+        <script>
+                if (sessionStorage.getItem('role') !== 'SUPERVISOR') {
+                    alert('Acceso denegado. Solo supervisores pueden registrar soportistas.');
+                    window.location.href = 'index.html';
+                }
+                loadServices();
+        </script>
+    </body>
+</html>
