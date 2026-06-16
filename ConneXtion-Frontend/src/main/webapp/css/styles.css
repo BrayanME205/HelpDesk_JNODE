@@ -325,3 +325,55 @@ body.dashboard {
     color: #444;
     font-weight: 500;
 }
+
+/* ── Badges de Estado para Tablas de Soporte ──────────────── */
+.badge-status {
+    display: inline-block;
+    padding: .25rem .6rem;
+    border-radius: 4px;
+    font-size: .8rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.badge-ingresado {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    border: 1px solid #bbdefb;
+}
+
+.badge-asignado {
+    background-color: #fff3e0;
+    color: #e65100;
+    border: 1px solid #ffe0b2;
+}
+
+.badge-progreso {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.badge-resueltos {
+    background-color: #f5f5f5;
+    color: #616161;
+    border: 1px solid #e0e0e0;
+}
+
+/* Contenedor Flex para mantener botones alineados simétricamente */
+.actions-flex-container {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    max-width: 220px;
+}
+
+.actions-flex-container .btn {
+    margin-top: 0 !important; /* Quita el margen superior por defecto de tus .btn */
+    padding: .5rem .75rem;
+    font-size: .85rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
