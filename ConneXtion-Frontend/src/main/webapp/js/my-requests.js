@@ -1,45 +1,34 @@
 document.addEventListener("DOMContentLoaded", loadMyRequests);
-
 async function loadMyRequests() {
     const session = await checkSession();
     if (!session)
         return;
-
     const role = sessionStorage.getItem("role");
     const clientId = sessionStorage.getItem("clientId");
-
     if (role !== "CLIENT" || !clientId) {
         window.location.href = "index.html";
         return;
     }
-
     try {
         const res = await fetch(`http://localhost:8081/api/issues/client/${clientId}`, {
             credentials: "include"
         });
-
         const data = await parseResponse(res);
-
         if (!res.ok) {
             showAlert(data.message || "No se pudieron cargar las solicitudes.", "error");
             return;
         }
-
         renderRequests(data);
-
     } catch (error) {
         showAlert("Error de conexión con el servidor.", "error");
     }
 }
-
 function renderRequests(requests) {
     const container = document.getElementById("requestsContainer");
-
     if (!requests || requests.length === 0) {
         container.innerHTML = "<p>No tienes solicitudes registradas todavía.</p>";
         return;
     }
-
     let html = `
         <table style="width:100%; border-collapse:collapse; background:white;">
             <thead>
@@ -53,7 +42,6 @@ function renderRequests(requests) {
             </thead>
             <tbody>
     `;
-
     requests.forEach(issue => {
         html += `
             <tr>
@@ -67,25 +55,20 @@ function renderRequests(requests) {
             </tr>
         `;
     });
-
     html += `
             </tbody>
         </table>
     `;
-
     container.innerHTML = html;
 }
-
 function goToDetail(issueId) {
     window.location.href = `request-detail.html?id=${issueId}`;
 }
-
 function formatDateTime(dateString) {
     if (!dateString)
         return "";
     return new Date(dateString).toLocaleString("es-CR");
 }
-
 function translateStatus(status) {
     const labels = {
         INGRESADO: "Ingresado",
@@ -95,13 +78,10 @@ function translateStatus(status) {
     };
     return labels[status] || status;
 }
-
 async function parseResponse(res) {
     const contentType = res.headers.get("content-type");
-
     if (contentType && contentType.includes("application/json")) {
         return await res.json();
     }
-
     return {message: await res.text()};
 }

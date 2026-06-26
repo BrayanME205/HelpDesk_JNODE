@@ -5,30 +5,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Panel de Supervisor - ConneXtion</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/supervisor.css">
     </head>
     <body>
-
         <div class="container">
-            <h1>Asignación de Tiquetes</h1>
-            <div style="margin-bottom: 15px;">
-                <a href="dashboard.html"><button type="button">Volver a la pagina principal</button></a>
+            <div class="back-link-row">
+                <a href="dashboard.html"><button type="button">← Volver a la página principal</button></a>
             </div>
-            <table id="issuesTable">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Reporte #</th>
-                        <th>Descripción</th>
-                        <th>Prioridad</th>
-                        <th>Asignar Soportista</th>
-                        <th>Acción</th>
-                        <th>Iniciar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            <h1>Asignación de Tiquetes</h1>
+            <div class="table-card" style="box-shadow:none; border:1px solid var(--border);">
+                <table id="issuesTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Reporte #</th>
+                            <th>Descripción</th>
+                            <th>Prioridad</th>
+                            <th>Asignar Soportista</th>
+                            <th>Acción</th>
+                            <th>Iniciar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <script src="js/supervisor.js"></script>
     </body>

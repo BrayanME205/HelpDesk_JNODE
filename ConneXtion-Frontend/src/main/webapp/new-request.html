@@ -12,44 +12,35 @@
             <h1>ConneXtion</h1>
             <p>Registrar nueva solicitud</p>
         </div>
-
         <div id="alertMsg" class="alert"></div>
-
         <div class="form-group">
             <label for="description">Descripción *</label>
             <textarea id="description" placeholder="Describe el problema" rows="5"></textarea>
         </div>
-
         <div class="form-group">
             <label for="contactPhone">Teléfono de contacto</label>
             <input type="text" id="contactPhone" placeholder="Opcional">
         </div>
-
         <div class="form-group">
             <label for="contactEmail">Correo de contacto</label>
             <input type="email" id="contactEmail" placeholder="Opcional">
         </div>
-
         <div class="form-group">
             <label for="referenceAddress">Dirección de referencia</label>
             <input type="text" id="referenceAddress" placeholder="Opcional">
         </div>
-
         <div class="form-group">
             <label for="serviceId">Servicio *</label>
             <select id="serviceId">
                 <option value="">Seleccione un servicio</option>
             </select>
         </div>
-
         <button class="btn" onclick="createIssue()">Registrar solicitud</button>
-
         <div class="link-row">
             <a href="my-requests.html">Ver mis solicitudes</a> |
             <a href="dashboard.html">Volver al inicio</a>
         </div>
     </div>
-
     <script src="js/auth.js"></script>
     <script src="js/new-request.js"></script>
 </body>

@@ -4,34 +4,28 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Support Chat - ConneXtion</title>
-
         <link rel="stylesheet" href="css/chat_styles.css">
     </head>
     <body>
-
         <main class="chat-wrapper">
             <header style="display: flex; justify-content: space-between; align-items: center; wrap: wrap;">
                 <div>
                     <h1>Live Support Chat</h1>
                     <p id="connection-status" class="status-disconnected">Disconnected</p>
                 </div>
-
                 <button onclick="window.location.href = 'dashboard.html'" 
                         style="background-color: #6c757d; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">
                     <- Volver al Dashboard
                 </button>
             </header>
-
             <div id="chat-container">
                 <ul id="message-list" class="message-list"></ul>
             </div>
-
             <div class="input-area">
                 <input type="text" id="message-input" placeholder="Type a message...">
                 <button id="send-button">Send</button>
             </div>
         </main>
-
         <script src="js/websocket_client.js"></script>
     </body>
 </html>
