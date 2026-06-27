@@ -16,7 +16,13 @@ async function loadMyIssues() {
         tbody.innerHTML = '';
 
         if (issues.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No tienes solicitudes asignadas</td></tr>';
+            tbody.innerHTML = `<tr><td colspan="6" style="padding:0;">
+                <div class="empty-state">
+                    <div class="empty-icon">🗂️</div>
+                    <strong>No tienes solicitudes asignadas</strong>
+                    <span>Cuando te asignen un tiquete aparecerá aquí.</span>
+                </div>
+            </td></tr>`;
             return;
         }
 

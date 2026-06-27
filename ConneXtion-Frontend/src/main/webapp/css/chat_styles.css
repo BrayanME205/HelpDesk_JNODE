@@ -65,6 +65,7 @@ body {
     transition: background .15s;
 }
 .chat-wrapper header button:hover { background: rgba(255,255,255,.22) !important; }
+.chat-wrapper header button:active { transform: translateY(1px); }
 
 #connection-status {
     font-size: .78rem;
@@ -87,7 +88,16 @@ body {
     overflow-y: auto;
     margin-bottom: 0;
     background: linear-gradient(180deg, #F8FAFD, #F1F4F9);
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
 }
+#chat-container::-webkit-scrollbar { width: 6px; }
+#chat-container::-webkit-scrollbar-track { background: transparent; }
+#chat-container::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 999px;
+}
+#chat-container::-webkit-scrollbar-thumb:hover { background: var(--text-400); }
 
 .message-list { list-style: none; padding: 0; margin: 0; }
 
@@ -167,6 +177,7 @@ body {
     transition: background .15s;
 }
 #send-button:hover { background-color: var(--blue-700); }
+#send-button:active { transform: translateY(1px); }
 
 @media (max-width: 480px) {
     body { padding: 0; }

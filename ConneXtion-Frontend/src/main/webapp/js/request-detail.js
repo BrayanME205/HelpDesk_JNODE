@@ -104,7 +104,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (!comments.length) {
             commentsList.innerHTML = `
-                <li>No hay comentarios registrados para esta solicitud.</li>
+                <li style="background:transparent; border:none; padding:0;">
+                    <div class="empty-state" style="padding:1.5rem 0;">
+                        <div class="empty-icon">💬</div>
+                        <strong>No hay comentarios todavía</strong>
+                        <span>Sé el primero en agregar uno.</span>
+                    </div>
+                </li>
             `;
             return;
         }

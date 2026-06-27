@@ -1,31 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Support Chat - ConneXtion</title>
-        <link rel="stylesheet" href="css/chat_styles.css">
+        <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230B1B33'/%3E%3Ctext x='50' y='66' font-family='Arial,sans-serif' font-size='44' font-weight='800' fill='%230056D2' text-anchor='middle'%3ECX%3C/text%3E%3C/svg%3E">
+        <meta name="theme-color" content="#0B1B33">
+        <title>Panel de Soportista - ConneXtion</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/supervisor.css">
     </head>
     <body>
-        <main class="chat-wrapper">
-            <header style="display: flex; justify-content: space-between; align-items: center; wrap: wrap;">
-                <div>
-                    <h1>Live Support Chat</h1>
-                    <p id="connection-status" class="status-disconnected">Disconnected</p>
-                </div>
-                <button onclick="window.location.href = 'dashboard.html'" 
-                        style="background-color: #6c757d; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                    <- Volver al Dashboard
-                </button>
-            </header>
-            <div id="chat-container">
-                <ul id="message-list" class="message-list"></ul>
+        <div class="container">
+            <div class="back-link-row">
+                <a href="dashboard.html"><button type="button">← Volver al Dashboard</button></a>
             </div>
-            <div class="input-area">
-                <input type="text" id="message-input" placeholder="Type a message...">
-                <button id="send-button">Send</button>
+            <h1>Mis Solicitudes Asignadas</h1>
+            <div class="table-card" style="box-shadow:none; border:1px solid var(--border);">
+                <table id="supporterTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Reporte #</th>
+                            <th>Descripción</th>
+                            <th>Prioridad</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="6" style="padding:0;">
+                            <div class="skeleton-row"><span class="skeleton skeleton-text skeleton-cell-sm"></span><span class="skeleton skeleton-text skeleton-cell-sm"></span><span class="skeleton skeleton-text skeleton-cell-lg"></span><span class="skeleton skeleton-text skeleton-cell-sm"></span><span class="skeleton skeleton-badge"></span></div>
+                        </td></tr>
+                        <tr><td colspan="6" style="padding:0;">
+                            <div class="skeleton-row"><span class="skeleton skeleton-text skeleton-cell-sm"></span><span class="skeleton skeleton-text skeleton-cell-sm"></span><span class="skeleton skeleton-text skeleton-cell-lg"></span><span class="skeleton skeleton-text skeleton-cell-sm"></span><span class="skeleton skeleton-badge"></span></div>
+                        </td></tr>
+                    </tbody>
+                </table>
             </div>
-        </main>
-        <script src="js/websocket_client.js"></script>
+        </div>
+        <script src="js/supporter.js"></script>
     </body>
 </html>

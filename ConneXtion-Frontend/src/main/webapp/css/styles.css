@@ -78,18 +78,19 @@ body:not(.app-shell):not(.dashboard) {
     justify-content: center;
     align-items: flex-start;
     padding: 3rem 1rem;
-    background: linear-gradient(180deg, #0B1B33 0%, #0B1B33 220px, #F5F7FA 220px, #F5F7FA 100%);
+    background: #F5F7FA;
 }
 
 .container {
+    position: relative;
+    z-index: 1;
     background: var(--surface);
     padding: 2.25rem 2.25rem 2rem;
     border-radius: var(--r-lg);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 20px 40px -12px rgba(11,27,51,.25);
     width: 100%;
     max-width: 440px;
     border: 1px solid var(--border-soft);
-    animation: rise .45s ease both;
 }
 
 .container.wide { max-width: 560px; }
@@ -105,9 +106,9 @@ body:not(.app-shell):not(.dashboard) {
 }
 .logo h1 {
     color: var(--navy-900);
-    font-size: 1.65rem;
+    font-size: 1.7rem;
     font-weight: 800;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.04em;
 }
 .logo p {
     color: var(--text-400);
@@ -280,6 +281,7 @@ textarea {
     border-radius: var(--r-sm);
     font-size: .92rem;
     font-family: inherit;
+    line-height: 1.5;
     color: var(--text-900);
     resize: vertical;
     height: 110px;
@@ -312,6 +314,8 @@ select {
     color: var(--text-900);
     background: var(--surface);
     width: 100%;
+    cursor: pointer;
+    transition: border-color .15s, box-shadow .15s;
 }
 
 /* =========================================================
@@ -342,7 +346,13 @@ body.dashboard {
     position: sticky;
     top: 0;
     height: 100vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,.15) transparent;
 }
+.sidebar::-webkit-scrollbar { width: 5px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 999px; }
 
 .sidebar-logo {
     display: flex;
@@ -395,10 +405,18 @@ body.dashboard {
 }
 .nav-item .ico { font-size: 1rem; width: 20px; text-align: center; }
 .nav-item:hover { background: rgba(255,255,255,.06); color: #fff; }
+.nav-item {
+    position: relative;
+}
 .nav-item.active {
     background: var(--blue-600);
     color: #fff;
     box-shadow: 0 2px 8px rgba(0,86,179,.35);
+    animation: navActivate .25s ease both;
+}
+@keyframes navActivate {
+    from { transform: translateX(-4px); opacity: .6; }
+    to   { transform: translateX(0); opacity: 1; }
 }
 
 .sidebar-spacer { flex: 1; }
@@ -477,6 +495,7 @@ body.dashboard {
     transition: background .15s;
 }
 .navbar button:hover { background: rgba(255,255,255,.22); }
+.navbar button:active { transform: translateY(1px); }
 
 /* ---- Welcome / stat cards ---- */
 .welcome-card {
@@ -491,7 +510,8 @@ body.dashboard {
     margin: 0 0 .35rem;
     color: #fff;
     text-align: left;
-    font-size: 1.35rem;
+    font-size: 1.4rem;
+    letter-spacing: -0.02em;
 }
 .welcome-card p {
     margin: 0;
@@ -818,6 +838,7 @@ td a:hover { text-decoration: underline; }
     transition: background .15s;
 }
 .chat-header-back:hover { background: rgba(255,255,255,.22); }
+.chat-header-back:active { transform: translateY(1px); }
 
 #connection-status {
     font-size: .78rem;
@@ -844,7 +865,16 @@ td a:hover { text-decoration: underline; }
     overflow-y: auto;
     margin-bottom: 0;
     background: linear-gradient(180deg, #F8FAFD, #F1F4F9);
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
 }
+#chat-container::-webkit-scrollbar { width: 6px; }
+#chat-container::-webkit-scrollbar-track { background: transparent; }
+#chat-container::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: var(--r-pill);
+}
+#chat-container::-webkit-scrollbar-thumb:hover { background: var(--text-400); }
 
 .message-list { list-style: none; padding: 0; margin: 0; }
 
@@ -924,6 +954,7 @@ td a:hover { text-decoration: underline; }
     transition: background .15s;
 }
 #send-button:hover { background: var(--blue-700); }
+#send-button:active { transform: translateY(1px); }
 
 /* =========================================================
    Detail / comments pages (request-detail.html)
@@ -958,7 +989,7 @@ td a:hover { text-decoration: underline; }
     color: var(--text-400);
     margin-bottom: .35rem;
 }
-.detail-item div { font-size: .92rem; color: var(--text-900); }
+.detail-item div { font-size: .92rem; color: var(--text-900); line-height: 1.55; }
 
 .comments-list { list-style: none; display: flex; flex-direction: column; gap: .9rem; }
 .comments-list li {
@@ -966,6 +997,7 @@ td a:hover { text-decoration: underline; }
     border-radius: var(--r-md);
     padding: .85rem 1rem;
     border: 1px solid var(--border-soft);
+    line-height: 1.55;
 }
 .comment-meta {
     font-size: .76rem;
@@ -987,8 +1019,138 @@ td a:hover { text-decoration: underline; }
 }
 
 /* =========================================================
-   Mobile nav toggle + responsive sidebar collapse
+   Skeleton loaders
    ========================================================= */
+
+@keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.skeleton {
+    background: linear-gradient(90deg, var(--border-soft) 25%, var(--border) 37%, var(--border-soft) 63%);
+    background-size: 400% 100%;
+    animation: shimmer 1.4s ease infinite;
+    border-radius: var(--r-sm);
+    display: block;
+}
+
+.skeleton-text {
+    height: .85rem;
+    margin-bottom: .5rem;
+    width: 100%;
+}
+.skeleton-text.w-60 { width: 60%; }
+.skeleton-text.w-40 { width: 40%; }
+.skeleton-text.w-80 { width: 80%; }
+
+.skeleton-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .9rem 1.4rem;
+    border-bottom: 1px solid var(--border-soft);
+}
+.skeleton-row:last-child { border-bottom: none; }
+.skeleton-row .skeleton-text { margin-bottom: 0; }
+.skeleton-cell-lg { flex: 2; }
+.skeleton-cell-sm { flex: 1; }
+.skeleton-badge {
+    width: 84px;
+    height: 1.5rem;
+    border-radius: var(--r-pill);
+}
+
+.skeleton-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 1.25rem 1.4rem;
+    box-shadow: var(--shadow-sm);
+}
+.skeleton-circle {
+    width: 38px; height: 38px;
+    border-radius: var(--r-sm);
+    flex-shrink: 0;
+}
+
+/* =========================================================
+   Empty states
+   ========================================================= */
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    color: var(--text-400);
+}
+.empty-state .empty-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--bg-app);
+    border: 1.5px dashed var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-400);
+}
+.empty-state strong {
+    color: var(--text-600);
+    font-size: .92rem;
+    font-weight: 600;
+    margin-bottom: .25rem;
+    display: block;
+}
+.empty-state span {
+    font-size: .82rem;
+    color: var(--text-400);
+}
+
+/* =========================================================
+   Page entrance + shared micro-interactions
+   ========================================================= */
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Applied once on initial paint for static layout shells. Dynamic containers
+   (tables refreshed via innerHTML, chat message lists) are intentionally
+   excluded so polling/refresh doesn't replay the animation every cycle. */
+.container,
+.welcome-card,
+.navbar,
+.action-card,
+.stat-card,
+.side-card {
+    animation: fadeUp .35s ease both;
+}
+
+.action-card:nth-of-type(2) { animation-delay: .04s; }
+.action-card:nth-of-type(3) { animation-delay: .08s; }
+.action-card:nth-of-type(4) { animation-delay: .12s; }
+.side-card + .side-card { animation-delay: .05s; }
+
+a, button, input, textarea, select, .nav-item, .action-card, [tabindex] {
+    outline-offset: 2px;
+}
+a:focus-visible, button:focus-visible, .nav-item:focus-visible, .action-card:focus-visible {
+    outline: 2px solid var(--blue-600);
+    outline-offset: 2px;
+    border-radius: var(--r-sm);
+}
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: none; /* already has the ring treatment above */
+}
+
+
 
 .mobile-topbar {
     display: none;
