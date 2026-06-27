@@ -1,11 +1,8 @@
 const API = 'http://localhost:8081/api';
-
 async function resolveIssue(event) {
     event.preventDefault();
-
     const issueId = document.getElementById('issueId').value;
     const comment = document.getElementById('resolutionComment').value;
-
     try {
         const response = await fetch(`${API}/issues/${issueId}/resolve`, {
             method: 'POST',
@@ -14,7 +11,6 @@ async function resolveIssue(event) {
             },
             body: comment
         });
-
         if (response.ok) {
             const message = await response.text();
             alert("¡Éxito! " + message);
@@ -27,7 +23,6 @@ async function resolveIssue(event) {
         alert('Error conectando con el servidor.');
     }
 }
-
 window.onload = () => {
     const params = new URLSearchParams(window.location.search);
     const issueId = params.get('issueId');

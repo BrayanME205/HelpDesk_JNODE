@@ -3,32 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230B1B33'/%3E%3Ctext x='50' y='66' font-family='Arial,sans-serif' font-size='44' font-weight='800' fill='%230056D2' text-anchor='middle'%3ECX%3C/text%3E%3C/svg%3E">
+        <meta name="theme-color" content="#0B1B33">
         <title>Resolución de Tiquetes - ConneXtion</title>
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/supervisor.css">
     </head>
     <body>
-
         <div class="container">
             <h1>Cerrar Tiquete</h1>
-            <p>Ingresa el número del reporte en el que trabajaste y la solución aplicada.</p>
-
+            <p style="color: var(--text-600); font-size: .9rem; margin-bottom: 1.5rem;">Ingresa el número del reporte en el que trabajaste y la solución aplicada.</p>
             <form id="resolveForm">
                 <div class="form-group">
                     <label for="issueId">Número de Reporte (ID):</label>
                     <input type="number" id="issueId" required placeholder="Ej: 1">
                 </div>
-
                 <div class="form-group">
                     <label for="resolutionComment">Comentario de Resolución:</label>
                     <textarea id="resolutionComment" required placeholder="Describe qué hiciste para solucionar el problema..."></textarea>
                 </div>
-
                 <button type="submit">Resolver Tiquete</button>
             </form> 
-
         </div>
-
         <script>
             function goBack() {
                 const role = sessionStorage.getItem('role');
@@ -39,7 +35,6 @@
                 }
             }
         </script>
-
         <script src="js/resolution.js"></script>
     </body>
 </html>

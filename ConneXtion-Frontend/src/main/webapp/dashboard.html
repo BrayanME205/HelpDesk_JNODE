@@ -3,50 +3,91 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230B1B33'/%3E%3Ctext x='50' y='66' font-family='Arial,sans-serif' font-size='44' font-weight='800' fill='%230056D2' text-anchor='middle'%3ECX%3C/text%3E%3C/svg%3E">
+        <meta name="theme-color" content="#0B1B33">
         <title>ConneXtion – Inicio</title>
         <link rel="stylesheet" href="css/styles.css">
 
     </head>
     <body class="dashboard">
 
-        <div class="navbar">
-            <div>
-                <h1>ConneXtion Help Desk</h1>
-                <div class="user-info" id="userInfo"></div>
+        <div class="app-shell">
+
+            <!-- Mobile topbar with menu toggle -->
+            <div class="mobile-topbar">
+                <div style="display:flex; align-items:center; gap:.6rem;">
+                    <div class="mark">CX</div>
+                    <strong style="font-size:.95rem;">ConneXtion</strong>
+                </div>
+                <button id="sidebarToggle" onclick="document.querySelector('.sidebar').classList.add('open'); document.querySelector('.sidebar-overlay').classList.add('show');">☰</button>
             </div>
-            <button onclick="logout()">Cerrar sesión</button>
-        </div>
+            <div class="sidebar-overlay" onclick="document.querySelector('.sidebar').classList.remove('open'); this.classList.remove('show');"></div>
 
-        <div class="welcome-card">
-            <h2>
-                Bienvenido, <span id="userName"></span>
-                <span class="role-badge" id="roleBadge"></span>
-            </h2>
-            <p>Selecciona una opción para continuar.</p>
-        </div>
+            <aside class="sidebar">
+                <div class="sidebar-logo">
+                    <div class="mark">CX</div>
+                    <div class="brand">
+                        <h1>ConneXtion</h1>
+                        <p>Mesa de Ayuda</p>
+                    </div>
+                </div>
 
-        <div class="actions-grid">
+                <ul class="sidebar-nav">
+                    <li class="nav-item active"><span class="ico">🏠</span> Inicio</li>
+                </ul>
 
-            <div class="action-card" id="cardMyRequests">
-                <div class="icon">📋</div>
-                <div class="label">Mis solicitudes</div>
+                <div class="sidebar-spacer"></div>
+
+                <div class="sidebar-help">
+                    <p>¿Necesitas ayuda? Nuestro equipo está listo para asistirte.</p>
+                </div>
+            </aside>
+
+            <div class="app-main">
+                <div class="navbar" style="margin:1.75rem 1.75rem 0;">
+                    <div>
+                        <h1>ConneXtion Help Desk</h1>
+                        <div class="user-info" id="userInfo"></div>
+                    </div>
+                    <button onclick="logout()">Cerrar sesión</button>
+                </div>
+
+                <div class="app-content">
+
+                    <div class="welcome-card">
+                        <h2>
+                            Bienvenido, <span id="userName"></span>
+                            <span class="role-badge" id="roleBadge"></span>
+                        </h2>
+                        <p>Selecciona una opción para continuar.</p>
+                    </div>
+
+                    <div class="actions-grid">
+
+                        <div class="action-card" id="cardMyRequests">
+                            <div class="icon">📋</div>
+                            <div class="label">Mis solicitudes</div>
+                        </div>
+
+                        <div class="action-card" id="cardNewRequest">
+                            <div class="icon">➕</div>
+                            <div class="label">Nueva solicitud</div>
+                        </div>
+
+                        <div class="action-card" id="cardSupportRequests">
+                            <div class="icon">📋</div>
+                            <div class="label">Ver solicitudes</div>
+                        </div>
+
+                        <div class="action-card" id="cardRegisterSupport">
+                            <div class="icon">👤</div>
+                            <div class="label">Registrar soportista</div>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
-
-            <div class="action-card" id="cardNewRequest">
-                <div class="icon">➕</div>
-                <div class="label">Nueva solicitud</div>
-            </div>
-
-            <div class="action-card" id="cardSupportRequests">
-                <div class="icon">📋</div>
-                <div class="label">Ver solicitudes</div>
-            </div>
-
-            <div class="action-card" id="cardRegisterSupport">
-                <div class="icon">👤</div>
-                <div class="label">Registrar soportista</div>
-            </div>
-
         </div>
 
         <script src="js/auth.js"></script>
