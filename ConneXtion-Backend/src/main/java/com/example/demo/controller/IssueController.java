@@ -121,19 +121,20 @@ public class IssueController {
     }
 
     @GetMapping("/supporter/{supporterId}")
-public List<Map<String, Object>> listSupporterIssues(@PathVariable Integer supporterId) {
-    return issueRepository.findByAssignedSupporter_SupporterId(supporterId).stream().map(issue -> {
-        Map<String, Object> item = new HashMap<>();
-        item.put("issueId", issue.getId());
-        item.put("requestNumber", issue.getRequestNumber());
-        item.put("service", issue.getService().getName());
-        item.put("description", issue.getDescription()); // <- agregar esta línea
-        item.put("registeredAt", issue.getRegisteredAt());
-        item.put("status", issue.getStatus());
-        item.put("classification", issue.getClassification());
-        return item;
-    }).toList();
-}
+    public List<Map<String, Object>> listSupporterIssues(@PathVariable Integer supporterId) {
+        return issueRepository.findByAssignedSupporter_SupporterId(supporterId).stream().map(issue -> {
+            Map<String, Object> item = new HashMap<>();
+            item.put("issueId", issue.getId());
+            item.put("requestNumber", issue.getRequestNumber());
+            item.put("service", issue.getService().getName());
+            item.put("description", issue.getDescription()); // <- agregar esta línea
+            item.put("registeredAt", issue.getRegisteredAt());
+            item.put("status", issue.getStatus());
+            item.put("classification", issue.getClassification());
+            return item;
+        }).toList();
+    }
+
     @PutMapping("/{issueId}/status")
     public String updateStatus(@PathVariable Integer issueId, @RequestBody Map<String, String> request) {
         String newStatus = request.get("status");

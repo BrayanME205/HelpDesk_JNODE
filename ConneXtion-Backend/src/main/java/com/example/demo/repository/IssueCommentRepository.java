@@ -5,5 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IssueCommentRepository extends JpaRepository<IssueComment, Integer> {
+
     List<IssueComment> findByIssue_IdOrderByCommentTimestampAsc(Integer issueId);
 }

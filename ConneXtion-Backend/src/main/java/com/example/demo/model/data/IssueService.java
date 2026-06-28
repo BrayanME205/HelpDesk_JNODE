@@ -147,8 +147,8 @@ public class IssueService {
 
         IssueComment comment = new IssueComment();
         comment.setIssue(issue);
-        comment.setSupporterAuthor(supporter); 
-        comment.setClientAuthor(null);         
+        comment.setSupporterAuthor(supporter);
+        comment.setClientAuthor(null);
         comment.setDescription(content);
         comment.setCommentTimestamp(LocalDateTime.now());
 

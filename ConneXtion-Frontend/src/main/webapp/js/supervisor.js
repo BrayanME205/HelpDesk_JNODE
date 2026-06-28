@@ -12,7 +12,13 @@ async function loadPendingIssues() {
         tbody.innerHTML = '';
 
         if (issues.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No hay tiquetes pendientes</td></tr>';
+            tbody.innerHTML = `<tr><td colspan="7" style="padding:0;">
+                <div class="empty-state">
+                    <div class="empty-icon">🗂️</div>
+                    <strong>No hay tiquetes pendientes</strong>
+                    <span>Las nuevas solicitudes aparecerán aquí.</span>
+                </div>
+            </td></tr>`;
             return;
         }
 
