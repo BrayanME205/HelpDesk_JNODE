@@ -119,4 +119,17 @@ public class AssignmentService {
 
         chatHandler.sendStateNotification(issueId, "El soportista ha iniciado la atención de tu solicitud (Estado: EN PROGRESO).");
     }
+
+    @Transactional
+    public void updateClassification(Integer issueId, IssueClassification newClassification) {
+        Issue issue = issueRepository.findById(issueId)
+                .orElseThrow(() -> new RuntimeException("Ticket no encontrado"));
+
+        issue.setClassification(newClassification);
+        issue.setUpdatedAt(LocalDateTime.now());
+        issueRepository.save(issue);
+
+        System.out.println("Supervisor cambió manualmente la prioridad del ticket " + issueId + " a " + newClassification);
+    }
+
 }
