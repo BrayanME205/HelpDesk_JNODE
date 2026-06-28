@@ -6,6 +6,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -111,31 +114,20 @@ class ClientMakeRequestTest extends BaseSeleniumTest {
         driver.findElement(By.cssSelector("button.btn")).click();
 
         // ── Paso 7: Verificar mensaje de éxito ──────────────────────────────
-        // La app muestra un alert con clase "alert-success" o una alerta nativa.
-        // Manejar ambos casos.
-        try {
-            // Caso A: alert nativo del navegador
-            wait.until(ExpectedConditions.alertIsPresent());
-            String mensajeAlert = driver.switchTo().alert().getText();
-            assertTrue(
-                    mensajeAlert.toLowerCase().contains("éxito") ||
-                    mensajeAlert.toLowerCase().contains("registr") ||
-                    mensajeAlert.toLowerCase().contains("solicitud"),
-                    "El mensaje del alert debe confirmar el registro. Texto recibido: " + mensajeAlert
-            );
-            driver.switchTo().alert().accept();
-        } catch (Exception sinAlertNativo) {
-            // Caso B: mensaje inline en el DOM
-            WebElement mensajeExito = wait.until(
-                    ExpectedConditions.visibilityOfElementLocated(
-                            By.cssSelector(".alert-success, #alertMsg.alert-success")
-                    )
-            );
-            String texto = mensajeExito.getText().toLowerCase();
-            assertTrue(
-                    texto.contains("éxito") || texto.contains("registr") || texto.contains("solicitud"),
-                    "El mensaje de éxito debe confirmar el registro. Texto: " + texto
-            );
-        }
+        // Esta pantalla solo usa el mensaje inline (#alertMsg.alert-success) y
+        // redirige a my-requests.html ~1.2s después de mostrarlo. Por eso se usa
+        // un WebDriverWait corto y dedicado en vez del wait largo por defecto,
+        // para alcanzar a leerlo antes de que la página cambie.
+        WebDriverWait waitCorto = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement mensajeExito = waitCorto.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.cssSelector(".alert-success, #alertMsg.alert-success")
+                )
+        );
+        String texto = mensajeExito.getText().toLowerCase();
+        assertTrue(
+                texto.contains("éxito") || texto.contains("registr") || texto.contains("solicitud"),
+                "El mensaje de éxito debe confirmar el registro. Texto: " + texto
+        );
     }
 }

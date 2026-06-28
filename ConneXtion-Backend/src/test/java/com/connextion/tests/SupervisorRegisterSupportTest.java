@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -111,29 +113,18 @@ class SupervisorRegisterSupportTest extends BaseSeleniumTest {
         driver.findElement(By.cssSelector("button.btn")).click();
 
         // ── Paso 7: Verificar mensaje de éxito ──────────────────────────────
-        try {
-            // Caso A: alert nativo del navegador
-            wait.until(ExpectedConditions.alertIsPresent());
-            String mensajeAlert = driver.switchTo().alert().getText().toLowerCase();
-            assertTrue(
-                    mensajeAlert.contains("éxito") ||
-                    mensajeAlert.contains("registr") ||
-                    mensajeAlert.contains("usuario"),
-                    "El mensaje debe confirmar el registro del soportista. Texto: " + mensajeAlert
-            );
-            driver.switchTo().alert().accept();
-        } catch (Exception sinAlertNativo) {
-            // Caso B: mensaje inline en el DOM
-            WebElement mensajeExito = wait.until(
-                    ExpectedConditions.visibilityOfElementLocated(
-                            By.cssSelector(".alert-success, #alertMsg.alert-success")
-                    )
-            );
-            String texto = mensajeExito.getText().toLowerCase();
-            assertTrue(
-                    texto.contains("éxito") || texto.contains("registr") || texto.contains("usuario"),
-                    "El mensaje de éxito debe confirmar el registro. Texto: " + texto
-            );
-        }
+        // Igual que en el flujo de cliente: el mensaje es inline y la redirección
+        // a dashboard.html ocurre ~2s después, por eso se usa un wait corto dedicado.
+        WebDriverWait waitCorto = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement mensajeExito = waitCorto.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.cssSelector(".alert-success, #alertMsg.alert-success")
+                )
+        );
+        String texto = mensajeExito.getText().toLowerCase();
+        assertTrue(
+                texto.contains("éxito") || texto.contains("registr") || texto.contains("usuario"),
+                "El mensaje de éxito debe confirmar el registro. Texto: " + texto
+        );
     }
 }

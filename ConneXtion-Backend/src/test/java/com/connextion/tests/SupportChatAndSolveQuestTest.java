@@ -7,6 +7,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -171,6 +172,14 @@ class SupportChatAndSolveQuestTest extends BaseSeleniumTest {
      *   1. Primer tiquete EN_PROGRESO → listo para chatear y resolver.
      *   2. Primer tiquete ASIGNADO → lo inicia (cambia a EN_PROGRESO) y lo devuelve.
      *
+     * Nota de implementación: el texto de cada fila se copia a una lista plana
+     * de Strings de inmediato (en vez de conservar los WebElement originales e
+     * iterarlos después). La tabla puede repoblarse en cualquier momento por el
+     * polling de notificaciones de supporter.js (cada 10s) o por un refresh
+     * disparado por otra acción; sostener referencias WebElement mientras se
+     * itera expone a StaleElementReferenceException si eso ocurre a mitad del
+     * bucle. Leer todo el texto necesario primero evita ese riesgo.
+     *
      * @return el issueId como String, o null si no hay tiquetes disponibles
      */
     private String obtenerIssueIdParaProcesar() {
@@ -179,19 +188,32 @@ class SupportChatAndSolveQuestTest extends BaseSeleniumTest {
                 By.cssSelector("#supporterTable tbody tr")
         );
 
+        // Capturar de inmediato el texto de cada celda de cada fila en listas
+        // planas, antes de que el DOM tenga oportunidad de cambiar.
+        List<List<String>> filasComoTexto = new ArrayList<>();
+        for (WebElement fila : filas) {
+            try {
+                List<WebElement> celdas = fila.findElements(By.tagName("td"));
+                List<String> textosCeldas = new ArrayList<>();
+                for (WebElement celda : celdas) {
+                    textosCeldas.add(celda.getText().trim());
+                }
+                filasComoTexto.add(textosCeldas);
+            } catch (org.openqa.selenium.StaleElementReferenceException stale) {
+                // Esta fila específica ya no es válida (la tabla se refrescó
+                // mientras leíamos); se omite y se continúa con las demás.
+            }
+        }
+
         String idEnProgreso = null;
         String idAsignado   = null;
 
-        for (WebElement fila : filas) {
-            String textoCelda = fila.getText();
-            if (textoCelda.contains("No tienes solicitudes")) continue;
-
-            // La primera columna (td[1]) contiene el issueId
-            List<WebElement> celdas = fila.findElements(By.tagName("td"));
+        for (List<String> celdas : filasComoTexto) {
             if (celdas.isEmpty()) continue;
+            if (celdas.get(0).contains("No tienes solicitudes")) continue;
 
-            String id     = celdas.get(0).getText().trim();
-            String estado = celdas.size() > 4 ? celdas.get(4).getText().trim() : "";
+            String id     = celdas.get(0);
+            String estado = celdas.size() > 4 ? celdas.get(4) : "";
 
             if ("EN_PROGRESO".equalsIgnoreCase(estado) && idEnProgreso == null) {
                 idEnProgreso = id;
