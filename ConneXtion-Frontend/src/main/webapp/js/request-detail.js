@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
             const payload = {
-                clientId: parseInt(sessionStorage.getItem("userId")), 
+                clientId: parseInt(sessionStorage.getItem("userId")),
                 description: description
             };
 

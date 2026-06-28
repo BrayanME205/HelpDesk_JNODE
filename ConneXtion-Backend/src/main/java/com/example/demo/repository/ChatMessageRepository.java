@@ -7,5 +7,6 @@ import java.util.List;
 
 @Repository
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Integer> {
+
     List<ChatMessage> findByIssueIdOrderBySentAtAsc(Integer issueId);
 }

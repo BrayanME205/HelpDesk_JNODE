@@ -7,5 +7,6 @@ import java.util.List;
 
 @Repository
 public interface ServiceRepository extends JpaRepository<Service, Integer> {
+
     List<Service> findByServiceIdIn(List<Integer> ids);
 }

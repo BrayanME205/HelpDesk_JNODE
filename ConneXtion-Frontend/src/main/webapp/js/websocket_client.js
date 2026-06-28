@@ -11,7 +11,7 @@ let webSocket;
 
 const myUserId = sessionStorage.getItem('userId') || "ID_FANTASMA";
 const myUserName = sessionStorage.getItem('userName') || "Usuario ConneXtion";
-const myUserRole = sessionStorage.getItem('role') || "CLIENT"; 
+const myUserRole = sessionStorage.getItem('role') || "CLIENT";
 const messageList = document.getElementById("message-list");
 const messageInput = document.getElementById("message-input");
 const sendButton = document.getElementById("send-button");

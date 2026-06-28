@@ -13,7 +13,6 @@
 
         <div class="app-shell">
 
-            <!-- Mobile topbar with menu toggle -->
             <div class="mobile-topbar">
                 <div style="display:flex; align-items:center; gap:.6rem;">
                     <div class="mark">CX</div>
@@ -92,63 +91,63 @@
 
         <script src="js/auth.js"></script>
         <script>
-                const role = sessionStorage.getItem('role');
-                const name = sessionStorage.getItem('userName');
-                const email = sessionStorage.getItem('email') || '';
+                        const role = sessionStorage.getItem('role');
+                        const name = sessionStorage.getItem('userName');
+                        const email = sessionStorage.getItem('email') || '';
 
-                if (!role || !name) {
-                    window.location.href = 'index.html';
-                }
+                        if (!role || !name) {
+                            window.location.href = 'index.html';
+                        }
 
-                document.getElementById('userName').textContent = name;
-                document.getElementById('userInfo').textContent = email;
+                        document.getElementById('userName').textContent = name;
+                        document.getElementById('userInfo').textContent = email;
 
-                const labels = {
-                    CLIENT: 'Cliente',
-                    SUPPORTER: 'Soportista',
-                    SUPERVISOR: 'Supervisor'
-                };
+                        const labels = {
+                            CLIENT: 'Cliente',
+                            SUPPORTER: 'Soportista',
+                            SUPERVISOR: 'Supervisor'
+                        };
 
-                const badge = document.getElementById('roleBadge');
-                badge.textContent = labels[role] || role;
-                badge.className = `role-badge badge-${role}`;
+                        const badge = document.getElementById('roleBadge');
+                        badge.textContent = labels[role] || role;
+                        badge.className = `role-badge badge-${role}`;
 
-                const cardMyRequests = document.getElementById('cardMyRequests');
-                const cardNewRequest = document.getElementById('cardNewRequest');
-                const cardSupportRequests = document.getElementById('cardSupportRequests');
-                const cardRegisterSupport = document.getElementById('cardRegisterSupport');
+                        const cardMyRequests = document.getElementById('cardMyRequests');
+                        const cardNewRequest = document.getElementById('cardNewRequest');
+                        const cardSupportRequests = document.getElementById('cardSupportRequests');
+                        const cardRegisterSupport = document.getElementById('cardRegisterSupport');
 
-                if (role === 'CLIENT') {
-                    cardMyRequests.style.display = 'block';
-                    cardNewRequest.style.display = 'block';
+                        if (role === 'CLIENT') {
+                            cardMyRequests.style.display = 'block';
+                            cardNewRequest.style.display = 'block';
 
-                    cardMyRequests.addEventListener('click', function () {
-                        window.location.href = 'my-requests.html';
-                    });
+                            cardMyRequests.addEventListener('click', function () {
+                                window.location.href = 'my-requests.html';
+                            });
 
-                    cardNewRequest.addEventListener('click', function () {
-                        window.location.href = 'new-request.html';
-                    });
-                }
+                            cardNewRequest.addEventListener('click', function () {
+                                window.location.href = 'new-request.html';
+                            });
+                        }
 
-                if (role === 'SUPPORTER') {
-                    cardSupportRequests.style.display = 'block';
-                    cardSupportRequests.addEventListener('click', function () {
-                        window.location.href = 'supporter.html'; // vista del soportista
-                    });
-                }
+                        if (role === 'SUPPORTER') {
+                            cardSupportRequests.style.display = 'block';
+                            cardSupportRequests.addEventListener('click', function () {
+                                window.location.href = 'supporter.html'; // vista del soportista
+                            });
+                        }
 
-                if (role === 'SUPERVISOR') {
-                    cardSupportRequests.style.display = 'block';
-                    cardSupportRequests.addEventListener('click', function () {
-                        window.location.href = 'supervisor.html';
-                    });
+                        if (role === 'SUPERVISOR') {
+                            cardSupportRequests.style.display = 'block';
+                            cardSupportRequests.addEventListener('click', function () {
+                                window.location.href = 'supervisor.html';
+                            });
 
-                    cardRegisterSupport.style.display = 'block';
-                    cardRegisterSupport.addEventListener('click', function () {
-                        window.location.href = 'support-register.html';
-                    });
-                }
+                            cardRegisterSupport.style.display = 'block';
+                            cardRegisterSupport.addEventListener('click', function () {
+                                window.location.href = 'support-register.html';
+                            });
+                        }
         </script>
 
     </body>
