@@ -6,7 +6,7 @@ if (!currentIssueId) {
     currentIssueId = "1";
 }
 
-const WS_URL = `ws://localhost:8081/chat?issueId=${currentIssueId}`;
+const WS_URL = `wss://helpdesk-jnode.onrender.com/chat?issueId=${currentIssueId}`;
 let webSocket;
 
 const myUserId = sessionStorage.getItem('userId') || "ID_FANTASMA";
@@ -123,7 +123,7 @@ async function loadChatHistory() {
     try {
         console.log(`Buscando historial para Issue ID: ${currentIssueId}. Mis datos locales son - ID: ${myUserId}, Rol: ${myUserRole}`);
 
-        const response = await fetch(`http://localhost:8081/api/chat/history/${currentIssueId}`);
+        const response = await fetch(`https://helpdesk-jnode.onrender.com/api/chat/history/${currentIssueId}`);
         if (response.ok) {
             const messages = await response.json();
             console.log("Mensajes crudos recibidos del backend:", messages);

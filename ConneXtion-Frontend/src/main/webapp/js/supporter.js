@@ -1,4 +1,4 @@
-const API = 'http://localhost:8081/api';
+const API = 'https://helpdesk-jnode.onrender.com/api';
 
 async function loadMyIssues() {
     const supporterId = sessionStorage.getItem('userId');
@@ -101,7 +101,7 @@ setInterval(async () => {
         return;
 
     try {
-        const res = await fetch(`http://localhost:8081/api/issues/unread-alerts/${userId}?role=${role}`);
+        const res = await fetch(`${API}/issues/unread-alerts/${userId}?role=${role}`);
         if (res.ok) {
             const alertas = await res.json();
             alertas.forEach(alerta => {

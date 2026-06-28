@@ -1,10 +1,10 @@
-const API_URL = 'http://localhost:8081/api/issues';
+const API_URL = 'https://helpdesk-jnode.onrender.com/api/issues';
 
 async function loadPendingIssues() {
     try {
         const [issuesRes, supportersRes] = await Promise.all([
             fetch(`${API_URL}/active`),
-            fetch('http://localhost:8081/api/supporters', {credentials: 'include'})
+            fetch('https://helpdesk-jnode.onrender.com/api/supporters', {credentials: 'include'})
         ]);
         const issues = await issuesRes.json();
         const supporters = await supportersRes.json();
@@ -132,7 +132,7 @@ setInterval(async () => {
         return;
 
     try {
-        const res = await fetch(`http://localhost:8081/api/issues/unread-alerts/${userId}?role=${role}`);
+        const res = await fetch(`https://helpdesk-jnode.onrender.com/api/issues/unread-alerts/${userId}?role=${role}`);
         if (res.ok) {
             const alertas = await res.json();
             alertas.forEach(alerta => {

@@ -10,7 +10,7 @@ async function loadMyRequests() {
         return;
     }
     try {
-        const res = await fetch(`http://localhost:8081/api/issues/client/${clientId}`, {
+        const res = await fetch(`${API}/issues/client/${clientId}`, {
             credentials: "include"
         });
         const data = await parseResponse(res);

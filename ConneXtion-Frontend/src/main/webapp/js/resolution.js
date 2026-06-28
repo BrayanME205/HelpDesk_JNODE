@@ -1,4 +1,5 @@
-const API = 'http://localhost:8081/api';
+const API = 'https://helpdesk-jnode.onrender.com/api';
+
 async function resolveIssue(event) {
     event.preventDefault();
     const issueId = document.getElementById('issueId').value;

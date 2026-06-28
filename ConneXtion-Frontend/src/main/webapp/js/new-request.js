@@ -98,7 +98,7 @@ async function createIssue() {
     }
 
     try {
-        const res = await fetch(`http://localhost:8081/api/issues`, {
+        const res = await fetch(`${API}/issues`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             credentials: "include",

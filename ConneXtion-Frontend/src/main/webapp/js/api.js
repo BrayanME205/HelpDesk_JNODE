@@ -1,4 +1,5 @@
-const API_BASE_URL = "http://localhost:8081/api";
+const API_BASE_URL = "https://helpdesk-jnode.onrender.com/api";
+
 async function apiRequest(endpoint, method = "GET", body = null) {
     const config = {
         method,
