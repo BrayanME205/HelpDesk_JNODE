@@ -43,7 +43,7 @@ function renderRequests(requests) {
                     <th>Servicio</th>
                     <th>Fecha</th>
                     <th>Estado</th>
-                    <th>Detalle</th>
+                    <th style="text-align: center;">Detalle</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,8 +55,10 @@ function renderRequests(requests) {
                 <td data-label="Servicio">${issue.service}</td>
                 <td data-label="Fecha">${formatDateTime(issue.registeredAt)}</td>
                 <td data-label="Estado">${getStatusBadge(issue.status)}</td>
-                <td data-label="Detalle">
-                    <button class="btn" style="width:auto; margin-top:0; padding:.55rem 1.1rem;" onclick="goToDetail(${issue.issueId})">Ver detalle</button>
+                <td data-label="Detalle" style="text-align: center; vertical-align: middle;">
+                    <button class="btn" style="display: inline-block; width: auto; margin: 0; padding: .55rem 1.1rem; cursor: pointer;" onclick="goToDetail(${issue.issueId})">
+                        Ver detalle
+                    </button>
                 </td>
             </tr>
         `;
