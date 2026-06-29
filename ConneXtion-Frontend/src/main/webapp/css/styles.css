@@ -1431,11 +1431,15 @@ input:focus-visible, textarea:focus-visible, select:focus-visible {
     }
     tbody td .btn, 
     tbody td .badge-status {
-        /*display: inline-block !important;*/
+        display: inline-flex !important; 
+        align-items: center;
+        justify-content: center;
         width: auto !important; 
-        max-width: 60%;
+        max-width: 70%; 
+        flex-shrink: 0; 
         text-align: center;
         margin: 0 !important;
+        white-space: nowrap;
     }
 }
 
