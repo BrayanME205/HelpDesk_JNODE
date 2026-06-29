@@ -1176,7 +1176,7 @@ td a:hover {
     gap: 0.5rem;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap; /* Si agregas otro botón y no cabe, se pone abajo automáticamente */
+    flex-wrap: wrap;
 }
 .actions-cell-container .btn {
     margin: 0 !important;
@@ -1431,7 +1431,7 @@ input:focus-visible, textarea:focus-visible, select:focus-visible {
     }
     tbody td .btn, 
     tbody td .badge-status {
-        display: inline-block !important;
+        /*display: inline-block !important;*/
         width: auto !important; 
         max-width: 60%;
         text-align: center;
