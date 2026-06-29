@@ -4,6 +4,7 @@ import com.example.demo.model.data.AddCommentRequest;
 import com.example.demo.model.data.CreateIssueRequest;
 import com.example.demo.model.data.IssueService;
 import com.example.demo.model.entities.Issue;
+import com.example.demo.model.entities.IssueClassification;
 import com.example.demo.model.entities.IssueComment;
 import com.example.demo.service.AssignmentService;
 import com.example.demo.repository.IssueRepository;
@@ -177,5 +178,12 @@ public class IssueController {
             item.put("classification", issue.getClassification());
             return item;
         }).toList();
+    }
+
+    @PutMapping("/{issueId}/classification")
+    public String updateClassification(@PathVariable Integer issueId, @RequestBody Map<String, String> request) {
+        String newClassification = request.get("classification");
+        assignmentService.updateClassification(issueId, IssueClassification.valueOf(newClassification.toUpperCase()));
+        return "Prioridad actualizada a " + newClassification;
     }
 }

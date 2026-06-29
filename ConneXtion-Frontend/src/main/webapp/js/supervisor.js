@@ -72,7 +72,13 @@ async function loadPendingIssues() {
                 <td>${issue.issueId}</td>
                 <td>${issue.requestNumber}</td>
                 <td>${issue.description || 'Sin descripción'}</td>
-                <td><strong>${issue.classification || 'Calculando...'}</strong></td>
+                <td>
+                   <select onchange="changeClassification(${id}, this.value)">
+                        <option value="ALTA" ${issue.classification === 'ALTA' ? 'selected' : ''}>ALTA</option>
+                        <option value="MEDIA" ${issue.classification === 'MEDIA' ? 'selected' : ''}>MEDIA</option>
+                        <option value="BAJA" ${issue.classification === 'BAJA' ? 'selected' : ''}>BAJA</option>
+                   </select>
+                </td>
                 ${assignCell}
                 ${startCell}
             `;
@@ -163,4 +169,21 @@ function showPushToast(text) {
     setTimeout(() => {
         toast.remove();
     }, 4000);
+}
+
+async function changeClassification(issueId, newClassification) {
+    try {
+        const response = await fetch(`${API_URL}/${issueId}/classification`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({classification: newClassification})
+        });
+        if (response.ok) {
+            console.log(`Prioridad del tiquete ${issueId} cambiada a ${newClassification}`);
+        } else {
+            alert('Error al cambiar la prioridad.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
