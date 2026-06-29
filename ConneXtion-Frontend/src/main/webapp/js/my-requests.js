@@ -43,7 +43,7 @@ function renderRequests(requests) {
                     <th>Servicio</th>
                     <th>Fecha</th>
                     <th>Estado</th>
-                    <th style="text-align: center;">Detalle</th>
+                    <th style="text-align: center;">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,10 +55,13 @@ function renderRequests(requests) {
                 <td data-label="Servicio">${issue.service}</td>
                 <td data-label="Fecha">${formatDateTime(issue.registeredAt)}</td>
                 <td data-label="Estado">${getStatusBadge(issue.status)}</td>
-                <td data-label="Detalle" style="text-align: center; vertical-align: middle;">
-                    <button class="btn" style="display: inline-block; width: auto; margin: 0; padding: .55rem 1.1rem; cursor: pointer;" onclick="goToDetail(${issue.issueId})">
-                        Ver detalle
-                    </button>
+                <td data-label="Acciones" style="text-align: center; vertical-align: middle;">
+                    <div class="actions-cell-container">
+                        <button class="btn" onclick="goToDetail(${issue.issueId})">
+                            Ver detalle
+                        </button>
+                        <!-- Aquí podés meter el segundo botón directamente y se acomodará solo -->
+                    </div>
                 </td>
             </tr>
         `;

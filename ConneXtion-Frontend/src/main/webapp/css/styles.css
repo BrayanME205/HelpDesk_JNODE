@@ -88,7 +88,8 @@ body:not(.app-shell):not(.dashboard) {
 }
 
 .container.wide {
-    max-width: 560px;
+    max-width: 960px; 
+    width: 95%;
 }
 
 @keyframes rise {
@@ -1169,6 +1170,21 @@ td a:hover {
     gap: .75rem;
     align-items: center;
     margin-top: .5rem;
+}
+.actions-cell-container {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Si agregas otro botón y no cabe, se pone abajo automáticamente */
+}
+.actions-cell-container .btn {
+    margin: 0 !important;
+    padding: .55rem 1.1rem;
+    width: auto !important;
+    display: inline-block;
+    cursor: pointer;
+    white-space: nowrap;
 }
 .actions .btn, .actions .btn-secondary {
     width: auto;
